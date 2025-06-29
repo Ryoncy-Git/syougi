@@ -1,17 +1,10 @@
 using UnityEngine;
 
-public class Scr_Gamemanager : MonoBehaviour
+public class Scr_GameManager : MonoBehaviour
 {
-    public static Scr_Gamemanager Instance;
+    private Scr_Class_Piece selectedPiece;
 
-    private Class_Piece selectedPiece;
-
-    void Awake()
-    {
-        Instance = this;
-    }
-
-    public void SelectPiece(Class_Piece piece)
+    public void SelectPiece(Scr_Class_Piece piece)
     {
         if (selectedPiece != null)
         {

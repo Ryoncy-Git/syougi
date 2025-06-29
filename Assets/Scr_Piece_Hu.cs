@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Scr_Piece_Hu : MonoBehaviour
+public class Scr_Piece_Hu : Scr_Class_Piece
 {
-    int pieceType = 0;
+    //int pieceType = 0;
 
     // void movement()
     // {
