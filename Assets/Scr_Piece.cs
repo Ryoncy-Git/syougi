@@ -43,6 +43,7 @@ public class Scr_Piece : MonoBehaviour
         isSelected = false;
         // ハイライト解除など
         sr.color = Color.white;
+        gameManager.hide_highlightGrid();
     }
 
     void show_path()
@@ -56,18 +57,7 @@ public class Scr_Piece : MonoBehaviour
         // hu ----------------------------------------
         int roundX = Mathf.RoundToInt(transform.position.x);
         int roundY = Mathf.RoundToInt(transform.position.y);
-        gameManager.show_highlightGrid(roundX, roundY);
-        // show_hilightGrid();
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = 0; j < 9; j++)
-            {
-                if (highlightGrid[i, j])
-                {
-                    Debug.Log(i + ", " + j);
-                }
-            }
-        }
+        gameManager.show_highlightGrid(roundX, roundY + 1);
             // break;
             // }
     }
