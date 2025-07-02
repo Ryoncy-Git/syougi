@@ -9,11 +9,12 @@ public class Scr_GameManager : MonoBehaviour
 
     void Start()
     {
-        init();
+        Init();
     }
 
-    void init()
+    void Init()
     {
+        // initialize of highlightGrid
         GameObject[] foundObjects = GameObject.FindGameObjectsWithTag("Tag_highlightGrid");
 
         int index = 0;
@@ -44,30 +45,44 @@ public class Scr_GameManager : MonoBehaviour
         selectedPiece = piece;
         selectedPiece.Select();
     }
-    public void grid_setGameObject(GameObject piece, int x, int y)
+
+    public void DeselectPiece()
     {
-        grid[x, y] = piece;
+        selectedPiece.Deselect();
+        selectedPiece = null;
+    }
+    public void Grid_setGameObject(GameObject piece, int x, int y)
+    {
+        if (x >= 0 && x < 9 && y >= 0 && y < 9)
+        {
+            grid[x, y] = piece;
+        }
     }
 
-    public GameObject grid_getGameObject(int x, int y)
+    public GameObject Grid_getGameObject(int x, int y)
     {
-        return grid[x, y];
+        if (x >= 0 && x < 9 && y >= 0 && y < 9)
+        {
+            return grid[x, y];
+        }
+
+        return null;
     }
 
-    public void change_turn()
+    public void Change_turn()
     {
         is1PTurn = !is1PTurn;
     }
 
-    public void show_highlightGrid(int roundX, int roundY)
+    public void Show_highlightGrid(int roundX, int roundY)
     {
-        if (highlightGrid[roundX, roundY] != null)
+        if (roundX >= 0 && roundX < 9 && roundY >= 0 && roundY < 9 && highlightGrid[roundX, roundY] != null)
         {
             highlightGrid[roundX, roundY].SetActive(true);
         }
     }
 
-    public void hide_highlightGrid()
+    public void Hide_highlightGrid()
     {
         for (int i = 0; i < 9; i++)
         {
@@ -76,5 +91,24 @@ public class Scr_GameManager : MonoBehaviour
                 highlightGrid[i, j].SetActive(false);
             }
         }
+    }
+
+    public void Click_highlightGrid(int x, int y)
+    {
+        // if (validMovement)
+        // {
+            selectedPiece.Movement(x, y);
+        // }
+    }
+
+    bool ValidMovement()
+    {
+        // if (grid[行先] == myPiece || (0 <= 行先.x < 9 && 0 <= 行先.y < 9))
+        // {
+        //     return false;
+        // }
+
+        // return true;
+        return true;
     }
 }

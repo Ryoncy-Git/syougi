@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Scr_Piece : MonoBehaviour
 {
+
+    //transform.position - (x, y, -1);
     bool isSelected = false;
     Scr_GameManager gameManager;
     SpriteRenderer sr;
@@ -10,7 +12,7 @@ public class Scr_Piece : MonoBehaviour
 
     void Start()
     {
-        init();
+        Init();
     }
 
     void Update()
@@ -18,7 +20,7 @@ public class Scr_Piece : MonoBehaviour
         
     }
 
-    void init()
+    void Init()
     {
         gameManager = GameObject.Find("Obj_GameManager").GetComponent<Scr_GameManager>();
         sr = GetComponent<SpriteRenderer>();
@@ -34,7 +36,7 @@ public class Scr_Piece : MonoBehaviour
         Debug.Log("選択しました");
         // ハイライト表示などがあればここで
         sr.color = Color.gray;
-        show_path();
+        Show_path();
         // movement();
     }
 
@@ -43,10 +45,10 @@ public class Scr_Piece : MonoBehaviour
         isSelected = false;
         // ハイライト解除など
         sr.color = Color.white;
-        gameManager.hide_highlightGrid();
+        gameManager.Hide_highlightGrid();
     }
 
-    void show_path()
+    void Show_path()
     {
         //showing path
         // switch(pieceKind)
@@ -57,19 +59,23 @@ public class Scr_Piece : MonoBehaviour
         // hu ----------------------------------------
         int roundX = Mathf.RoundToInt(transform.position.x);
         int roundY = Mathf.RoundToInt(transform.position.y);
-        gameManager.show_highlightGrid(roundX, roundY + 1);
+        gameManager.Show_highlightGrid(roundX, roundY + 1);
             // break;
             // }
     }
 
-    void movement()
+    public void Movement(int x, int y)
     {
-        // transform = (行先);
-        // if(catch)
-        // {
-        //     catch(行先の駒)
-        // }
+        // x, yは行先の座標
+        transform.position = new Vector3(x, y, -1);
 
-        
+        if (gameManager.Grid_getGameObject(x, y) != null)//cacth
+        {
+            // 持ち駒 = gameManager.grid_getGameObject(x, y);
+        }
+        gameManager.Grid_setGameObject(this.gameObject, x, y);
+
+        gameManager.Hide_highlightGrid();
+        gameManager.DeselectPiece();
     }
 }
