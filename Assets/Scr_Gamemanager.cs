@@ -51,7 +51,7 @@ public class Scr_GameManager : MonoBehaviour
         selectedPiece.Deselect();
         selectedPiece = null;
     }
-    public void Grid_setGameObject(GameObject piece, int x, int y)
+    public void Set_GridGameObject(GameObject piece, int x, int y)
     {
         if (x >= 0 && x < 9 && y >= 0 && y < 9)
         {
@@ -59,7 +59,7 @@ public class Scr_GameManager : MonoBehaviour
         }
     }
 
-    public GameObject Grid_getGameObject(int x, int y)
+    public GameObject Get_GridGameObject(int x, int y)
     {
         if (x >= 0 && x < 9 && y >= 0 && y < 9)
         {
@@ -95,14 +95,23 @@ public class Scr_GameManager : MonoBehaviour
 
     public void Click_highlightGrid(int x, int y)
     {
-        // if (validMovement)
-        // {
+        if (selectedPiece != null)
+        {
             selectedPiece.Movement(x, y);
-        // }
+        }
+        else
+        {
+            Debug.Log("selected Piece == null!");
+        }
     }
 
     bool ValidMovement()
     {
+        // もしかしたらいらないかも
+        // っていうのもhighlightGridの表示してる範囲しかそもそもクリックできないから、
+        //　sshow_highlightGridで光らせるところを制限すればいらないかも
+
+
         // if (grid[行先] == myPiece || (0 <= 行先.x < 9 && 0 <= 行先.y < 9))
         // {
         //     return false;
