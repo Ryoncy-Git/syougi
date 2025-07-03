@@ -18,7 +18,7 @@ public class Scr_Piece : MonoBehaviour
     };
     PieceType pieceType;
     private bool is1PPiece = true;
-    bool isSelected = false;
+    // bool isSelected = false;
     Scr_GameManager gameManager;
     SpriteRenderer sr;
 
@@ -107,7 +107,7 @@ public class Scr_Piece : MonoBehaviour
 
     public void Select()
     {
-        isSelected = true;
+        // isSelected = true;
         Debug.Log("選択しました");
         // ハイライト表示などがあればここで
         sr.color = Color.gray;
@@ -116,7 +116,7 @@ public class Scr_Piece : MonoBehaviour
 
     public void Deselect()
     {
-        isSelected = false;
+        // isSelected = false;
         // ハイライト解除など
         sr.color = Color.white;
         gameManager.Hide_highlightGrid();
@@ -125,6 +125,13 @@ public class Scr_Piece : MonoBehaviour
     void Show_path()
     {
         //showing path
+
+        // Show_highlightGrid(x, y) は「マスが空 or 敵なら表示」という前提です。
+        // → 必要なら Get_GridGameObject(x, y) で駒の存在をチェックして、途中でループ break させる処理も追加できます。
+
+        // すべて 1P側の動きです。2Pの場合は roundY ± n の符号を反転する必要があります。
+
+
 
         int roundX = Mathf.RoundToInt(transform.position.x);
         int roundY = Mathf.RoundToInt(transform.position.y);
@@ -164,6 +171,101 @@ public class Scr_Piece : MonoBehaviour
                 }          
                 break;
 
+            case PieceType.Keima:
+                if (roundY + 2 < 9)
+                {
+                    if (roundX - 1 >= 0)
+                        gameManager.Show_highlightGrid(roundX - 1, roundY + 2);
+                    if (roundX + 1 < 9)
+                        gameManager.Show_highlightGrid(roundX + 1, roundY + 2);
+                }
+                break;
+
+            case PieceType.Gin:
+                gameManager.Show_highlightGrid(roundX, roundY + 1);      // 前
+                if (roundX > 0)
+                {
+                    gameManager.Show_highlightGrid(roundX - 1, roundY + 1); // 左前
+                    gameManager.Show_highlightGrid(roundX - 1, roundY - 1); // 左後
+                }
+                if (roundX < 8)
+                {
+                    gameManager.Show_highlightGrid(roundX + 1, roundY + 1); // 右前
+                    gameManager.Show_highlightGrid(roundX + 1, roundY - 1); // 右後
+                }
+                break;
+
+            case PieceType.Kin:
+                gameManager.Show_highlightGrid(roundX, roundY + 1); // 前
+                gameManager.Show_highlightGrid(roundX, roundY - 1); // 後
+                if (roundX > 0)
+                {
+                    gameManager.Show_highlightGrid(roundX - 1, roundY);     // 左
+                    gameManager.Show_highlightGrid(roundX - 1, roundY + 1); // 左前
+                }
+                if (roundX < 8)
+                {
+                    gameManager.Show_highlightGrid(roundX + 1, roundY);     // 右
+                    gameManager.Show_highlightGrid(roundX + 1, roundY + 1); // 右前
+                }
+                break;
+
+            case PieceType.Ou:
+                for (int dx = -1; dx <= 1; dx++)
+                {
+                    for (int dy = -1; dy <= 1; dy++)
+                    {
+                        if (dx == 0 && dy == 0)
+                            continue;
+
+                        int nx = roundX + dx;
+                        int ny = roundY + dy;
+
+                        if (nx >= 0 && nx < 9 && ny >= 0 && ny < 9)
+                        {
+                            gameManager.Show_highlightGrid(nx, ny);
+                        }
+                    }
+                }
+                break;
+
+            case PieceType.Kaku:
+                for (int i = 1; i < 9; i++)
+                {
+                    // 左上
+                    if (roundX - i >= 0 && roundY + i < 9)
+                        gameManager.Show_highlightGrid(roundX - i, roundY + i);
+                    // 右上
+                    if (roundX + i < 9 && roundY + i < 9)
+                        gameManager.Show_highlightGrid(roundX + i, roundY + i);
+                    // 左下
+                    if (roundX - i >= 0 && roundY - i >= 0)
+                        gameManager.Show_highlightGrid(roundX - i, roundY - i);
+                    // 右下
+                    if (roundX + i < 9 && roundY - i >= 0)
+                        gameManager.Show_highlightGrid(roundX + i, roundY - i);
+                }
+                break;
+
+
+            case PieceType.Hisya:
+                for (int i = 1; i < 9; i++)
+                {
+                    // 上
+                    if (roundY + i < 9)
+                        gameManager.Show_highlightGrid(roundX, roundY + i);
+                    // 下
+                    if (roundY - i >= 0)
+                        gameManager.Show_highlightGrid(roundX, roundY - i);
+                    // 左
+                    if (roundX - i >= 0)
+                        gameManager.Show_highlightGrid(roundX - i, roundY);
+                    // 右
+                    if (roundX + i < 9)
+                        gameManager.Show_highlightGrid(roundX + i, roundY);
+                }
+                break;
+
             default:
                 break;
         }
@@ -172,6 +274,9 @@ public class Scr_Piece : MonoBehaviour
     public void Movement(int x, int y)
     {
         // x, y は行先の座標
+        int prevX = Mathf.RoundToInt(transform.position.x);
+        int prevY = Mathf.RoundToInt(transform.position.y);
+
         transform.position = new Vector3(x, y, -1);
 
         if (gameManager.Get_GridGameObject(x, y) != null)//cacth
@@ -179,9 +284,7 @@ public class Scr_Piece : MonoBehaviour
             // 持ち駒 = gameManager.Get_GridGameObject(x, y);
         }
 
-        int roundX = Mathf.RoundToInt(transform.position.x);
-        int roundY = Mathf.RoundToInt(transform.position.y);
-        gameManager.Set_GridGameObject(null, roundX, roundY);
+        gameManager.Set_GridGameObject(null, prevX, prevY);
         gameManager.Set_GridGameObject(this.gameObject, x, y);
 
         gameManager.Hide_highlightGrid();
