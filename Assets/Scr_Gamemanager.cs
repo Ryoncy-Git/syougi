@@ -9,9 +9,12 @@ public class Scr_GameManager : MonoBehaviour
     bool is1PTurn = true;
     Dictionary<PieceType, int> capturedPieces_1P = new Dictionary<PieceType, int>();
     Dictionary<PieceType, int> capturedPieces_2P = new Dictionary<PieceType, int>();
+    int NaruX, NaruY;
+    Scr_UI Scr_ui;
 
     void Start()
     {
+        Scr_ui = GameObject.Find("UserInterface").GetComponent<Scr_UI>();
         Init();
     }
 
@@ -105,10 +108,46 @@ public class Scr_GameManager : MonoBehaviour
 
     public void Click_highlightGrid(int x, int y)
     {
+        bool canNari = false;
+        int prevY = Mathf.RoundToInt(selectedPiece.transform.position.y);
+        canNari = (selectedPiece.Get_is1PPiece() && y >= 6) || (selectedPiece.Get_is1PPiece() && prevY >= 6) ||
+                  (!selectedPiece.Get_is1PPiece() && y <= 2) || (!selectedPiece.Get_is1PPiece() && prevY <= 2);
+
+        if (canNari && !selectedPiece.Get_isNari())
+        {
+            NaruX = x;
+            NaruY = y;
+            // なる画面のUIを表示
+            Scr_ui.Show_NariSelect();
+            // 入力をUI以外無効化
+            // Scr_ui.mukouka();
+        }
+        else
+        {
+            if (selectedPiece != null)
+            {
+                selectedPiece.Movement(x, y);
+            }
+        }
+    }
+
+    public void Click_Naru()
+    {
+        selectedPiece.Set_Nari(true);
         if (selectedPiece != null)
         {
-            selectedPiece.Movement(x, y);
+            selectedPiece.Movement(NaruX, NaruY);
         }
+        Scr_ui.Hide_NariSelect();
+    }
+
+    public void Click_Naranai()
+    {
+        if (selectedPiece != null)
+        {
+            selectedPiece.Movement(NaruX, NaruY);
+        }
+        Scr_ui.Hide_NariSelect();
     }
 
     public void Capture_piece(GameObject piece, bool is1P) // 1Pが捕まえたのか
@@ -119,7 +158,7 @@ public class Scr_GameManager : MonoBehaviour
         if (targetPiece == null) return;
 
         PieceType targetPieceType = targetPiece.Get_PieceType();
-        
+
         if (is1P)
         {
             if (capturedPieces_1P.ContainsKey(targetPieceType))

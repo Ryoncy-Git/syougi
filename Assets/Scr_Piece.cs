@@ -6,6 +6,7 @@ public class Scr_Piece : MonoBehaviour
     //transform.position - (x, y, -1);
     PieceType pieceType;
     public bool is1PPiece = true;
+    public bool isNari = false;
     // bool isSelected = false;
     Scr_GameManager gameManager;
     Scr_PieceMovement pieceMovement;
@@ -128,19 +129,31 @@ public class Scr_Piece : MonoBehaviour
         switch (pieceType)
         {
             case PieceType.Hu:
-                pieceMovement.Show_path_Hu(roundX, roundY, is1PPiece);
+                if (isNari)
+                    pieceMovement.Show_path_Kin(roundX, roundY, is1PPiece);
+                else
+                    pieceMovement.Show_path_Hu(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Kyosya:
-                pieceMovement.Show_path_Kyosya(roundX, roundY, is1PPiece);
+                if (isNari)
+                    pieceMovement.Show_path_Kin(roundX, roundY, is1PPiece);
+                else
+                    pieceMovement.Show_path_Kyosya(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Keima:
-                pieceMovement.Show_path_Keima(roundX, roundY, is1PPiece);
+                if (isNari)
+                    pieceMovement.Show_path_Kin(roundX, roundY, is1PPiece);
+                else
+                    pieceMovement.Show_path_Keima(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Gin:
-                pieceMovement.Show_path_Gin(roundX, roundY, is1PPiece);
+                if (isNari)
+                    pieceMovement.Show_path_Kin(roundX, roundY, is1PPiece);
+                else
+                    pieceMovement.Show_path_Gin(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Kin:
@@ -152,10 +165,16 @@ public class Scr_Piece : MonoBehaviour
                 break;
 
             case PieceType.Kaku:
+                if (isNari)
+                    pieceMovement.Show_path_Ou(roundX, roundY, is1PPiece);
+
                 pieceMovement.Show_path_Kaku(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Hisya:
+                if (isNari)
+                    pieceMovement.Show_path_Ou(roundX, roundY, is1PPiece);
+
                 pieceMovement.Show_path_Hisya(roundX, roundY, is1PPiece);
                 break;
 
@@ -193,5 +212,15 @@ public class Scr_Piece : MonoBehaviour
     public PieceType Get_PieceType()
     {
         return pieceType;
+    }
+
+    public void Set_Nari(bool state)
+    {
+        isNari = state;
+    }
+
+    public bool Get_isNari()
+    {
+        return isNari;
     }
 }
