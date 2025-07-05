@@ -4,23 +4,13 @@ public class Scr_Piece : MonoBehaviour
 {
 
     //transform.position - (x, y, -1);
-    private enum PieceType
-    {
-        Hu,
-        Kyosya,
-        Keima,
-        Gin,
-        Kin,
-        Ou,
-        Kaku,
-        Hisya,
-        None
-    };
     PieceType pieceType;
-    private bool is1PPiece = true;
+    public bool is1PPiece = true;
     // bool isSelected = false;
     Scr_GameManager gameManager;
+    Scr_PieceMovement pieceMovement;
     SpriteRenderer sr;
+
 
 
     void Start()
@@ -37,18 +27,28 @@ public class Scr_Piece : MonoBehaviour
     {
         gameManager = GameObject.Find("Obj_GameManager").GetComponent<Scr_GameManager>();
         sr = GetComponent<SpriteRenderer>();
+        pieceMovement = new Scr_PieceMovement(gameManager);
 
         InitPiece();
     }
 
     void InitPiece()
     {
-        
 
+        // インスペクターから設定でもいいかも
         pieceType = PieceType.None;
 
         int x = Mathf.RoundToInt(transform.position.x);
         int y = Mathf.RoundToInt(transform.position.y);
+
+        if (y < 4)
+        {
+            is1PPiece = true;
+        }
+        else
+        {
+            is1PPiece = false;
+        }
 
         gameManager.Set_GridGameObject(transform.gameObject, x, y);
 
@@ -107,163 +107,56 @@ public class Scr_Piece : MonoBehaviour
 
     public void Select()
     {
-        // isSelected = true;
-        Debug.Log("選択しました");
-        // ハイライト表示などがあればここで
         sr.color = Color.gray;
         Show_path();
     }
 
     public void Deselect()
     {
-        // isSelected = false;
-        // ハイライト解除など
         sr.color = Color.white;
         gameManager.Hide_highlightGrid();
     }
 
     void Show_path()
     {
-        //showing path
-
-        // Show_highlightGrid(x, y) は「マスが空 or 敵なら表示」という前提です。
-        // → 必要なら Get_GridGameObject(x, y) で駒の存在をチェックして、途中でループ break させる処理も追加できます。
-
-        // すべて 1P側の動きです。2Pの場合は roundY ± n の符号を反転する必要があります。
-
-
-
         int roundX = Mathf.RoundToInt(transform.position.x);
         int roundY = Mathf.RoundToInt(transform.position.y);
+
+        // gamemanagerのほうで範囲外のものははじくようにできているから、
+        // show_highlightGridでこっちでは盤面内かどうかを判定する必要はない
+        // ただし、駒があるかどうかは判定しないためそこは見る必要がある
         switch (pieceType)
         {
             case PieceType.Hu:
-                gameManager.Show_highlightGrid(roundX, roundY + 1);
+                pieceMovement.Show_path_Hu(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Kyosya:
-                int stopNum = (9 - 1) - roundY;
-                for (int i = 1; i + roundY < 9; i++)
-                {   
-                    GameObject target = gameManager.Get_GridGameObject(roundX, roundY + i);
-                    if (target != null)
-                    {
-                        // Debug.Log("target != null");
-                        Scr_Piece targetPiece = target.GetComponent<Scr_Piece>();
-                        if (targetPiece != null)
-                        {
-                            if (targetPiece.Get_is1PPiece())
-                            {
-                                stopNum = i - 1;
-                            }
-                            else
-                            {
-                                stopNum = i;
-                            }
-                            break;
-                        }
-                    } 
-                }
-
-                for (int i = 1; i <= stopNum; i++)
-                {
-                    gameManager.Show_highlightGrid(roundX, roundY + i);
-                }          
+                pieceMovement.Show_path_Kyosya(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Keima:
-                if (roundY + 2 < 9)
-                {
-                    if (roundX - 1 >= 0)
-                        gameManager.Show_highlightGrid(roundX - 1, roundY + 2);
-                    if (roundX + 1 < 9)
-                        gameManager.Show_highlightGrid(roundX + 1, roundY + 2);
-                }
+                pieceMovement.Show_path_Keima(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Gin:
-                gameManager.Show_highlightGrid(roundX, roundY + 1);      // 前
-                if (roundX > 0)
-                {
-                    gameManager.Show_highlightGrid(roundX - 1, roundY + 1); // 左前
-                    gameManager.Show_highlightGrid(roundX - 1, roundY - 1); // 左後
-                }
-                if (roundX < 8)
-                {
-                    gameManager.Show_highlightGrid(roundX + 1, roundY + 1); // 右前
-                    gameManager.Show_highlightGrid(roundX + 1, roundY - 1); // 右後
-                }
+                pieceMovement.Show_path_Gin(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Kin:
-                gameManager.Show_highlightGrid(roundX, roundY + 1); // 前
-                gameManager.Show_highlightGrid(roundX, roundY - 1); // 後
-                if (roundX > 0)
-                {
-                    gameManager.Show_highlightGrid(roundX - 1, roundY);     // 左
-                    gameManager.Show_highlightGrid(roundX - 1, roundY + 1); // 左前
-                }
-                if (roundX < 8)
-                {
-                    gameManager.Show_highlightGrid(roundX + 1, roundY);     // 右
-                    gameManager.Show_highlightGrid(roundX + 1, roundY + 1); // 右前
-                }
+                pieceMovement.Show_path_Kin(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Ou:
-                for (int dx = -1; dx <= 1; dx++)
-                {
-                    for (int dy = -1; dy <= 1; dy++)
-                    {
-                        if (dx == 0 && dy == 0)
-                            continue;
-
-                        int nx = roundX + dx;
-                        int ny = roundY + dy;
-
-                        if (nx >= 0 && nx < 9 && ny >= 0 && ny < 9)
-                        {
-                            gameManager.Show_highlightGrid(nx, ny);
-                        }
-                    }
-                }
+                pieceMovement.Show_path_Ou(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Kaku:
-                for (int i = 1; i < 9; i++)
-                {
-                    // 左上
-                    if (roundX - i >= 0 && roundY + i < 9)
-                        gameManager.Show_highlightGrid(roundX - i, roundY + i);
-                    // 右上
-                    if (roundX + i < 9 && roundY + i < 9)
-                        gameManager.Show_highlightGrid(roundX + i, roundY + i);
-                    // 左下
-                    if (roundX - i >= 0 && roundY - i >= 0)
-                        gameManager.Show_highlightGrid(roundX - i, roundY - i);
-                    // 右下
-                    if (roundX + i < 9 && roundY - i >= 0)
-                        gameManager.Show_highlightGrid(roundX + i, roundY - i);
-                }
+                pieceMovement.Show_path_Kaku(roundX, roundY, is1PPiece);
                 break;
 
-
             case PieceType.Hisya:
-                for (int i = 1; i < 9; i++)
-                {
-                    // 上
-                    if (roundY + i < 9)
-                        gameManager.Show_highlightGrid(roundX, roundY + i);
-                    // 下
-                    if (roundY - i >= 0)
-                        gameManager.Show_highlightGrid(roundX, roundY - i);
-                    // 左
-                    if (roundX - i >= 0)
-                        gameManager.Show_highlightGrid(roundX - i, roundY);
-                    // 右
-                    if (roundX + i < 9)
-                        gameManager.Show_highlightGrid(roundX + i, roundY);
-                }
+                pieceMovement.Show_path_Hisya(roundX, roundY, is1PPiece);
                 break;
 
             default:
@@ -278,10 +171,11 @@ public class Scr_Piece : MonoBehaviour
         int prevY = Mathf.RoundToInt(transform.position.y);
 
         transform.position = new Vector3(x, y, -1);
-
-        if (gameManager.Get_GridGameObject(x, y) != null)//cacth
+        GameObject targetObject = gameManager.Get_GridGameObject(x, y);
+        if (targetObject != null)//cacth
         {
             // 持ち駒 = gameManager.Get_GridGameObject(x, y);
+            gameManager.Capture_piece(targetObject, is1PPiece);
         }
 
         gameManager.Set_GridGameObject(null, prevX, prevY);
@@ -294,5 +188,10 @@ public class Scr_Piece : MonoBehaviour
     public bool Get_is1PPiece()
     {
         return is1PPiece;
+    }
+
+    public PieceType Get_PieceType()
+    {
+        return pieceType;
     }
 }

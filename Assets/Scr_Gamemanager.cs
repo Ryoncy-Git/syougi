@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Scr_GameManager : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class Scr_GameManager : MonoBehaviour
     private GameObject[,] grid = new GameObject[9, 9];
     private GameObject[,] highlightGrid = new GameObject[9, 9];
     bool is1PTurn = true;
+    Dictionary<PieceType, int> capturedPieces_1P = new Dictionary<PieceType, int>();
+    Dictionary<PieceType, int> capturedPieces_2P = new Dictionary<PieceType, int>();
 
     void Start()
     {
@@ -32,6 +35,13 @@ public class Scr_GameManager : MonoBehaviour
                     highlightGrid[x, y].SetActive(false);
                 }
             }
+        }
+
+        // initialize of capturedPieces
+        foreach (PieceType type in System.Enum.GetValues(typeof(PieceType)))
+        {
+            capturedPieces_1P[type] = 0;
+            capturedPieces_2P[type] = 0;
         }
     }
 
@@ -99,25 +109,35 @@ public class Scr_GameManager : MonoBehaviour
         {
             selectedPiece.Movement(x, y);
         }
-        else
-        {
-            Debug.Log("selected Piece == null!");
-        }
     }
 
-    bool ValidMovement()
+    public void Capture_piece(GameObject piece, bool is1P) // 1Pが捕まえたのか
     {
-        // もしかしたらいらないかも
-        // っていうのもhighlightGridの表示してる範囲しかそもそもクリックできないから、
-        //　sshow_highlightGridで光らせるところを制限すればいらないかも
+        // piece は捕まえられたピース
+        // is1Pは捕まえる側がどっちなのかを表す
+        Scr_Piece targetPiece = piece.GetComponent<Scr_Piece>();
+        if (targetPiece == null) return;
 
+        PieceType targetPieceType = targetPiece.Get_PieceType();
+        
+        if (is1P)
+        {
+            if (capturedPieces_1P.ContainsKey(targetPieceType))
+                capturedPieces_1P[targetPieceType]++;
+            else
+                capturedPieces_1P[targetPieceType] = 1;
+        }
+        else
+        {
+            if (capturedPieces_2P.ContainsKey(targetPieceType))
+                capturedPieces_2P[targetPieceType]++;
+            else
+                capturedPieces_2P[targetPieceType] = 1;
+        }
 
-        // if (grid[行先] == myPiece || (0 <= 行先.x < 9 && 0 <= 行先.y < 9))
-        // {
-        //     return false;
-        // }
-
-        // return true;
-        return true;
+        if (piece != null)
+        {
+            Destroy(piece);
+        }
     }
 }
