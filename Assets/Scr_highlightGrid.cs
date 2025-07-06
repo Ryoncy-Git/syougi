@@ -20,6 +20,6 @@ public class Scr_highlightGrid : MonoBehaviour
         int roundX = Mathf.RoundToInt(transform.position.x);
         int roundY = Mathf.RoundToInt(transform.position.y);
         gameManager.Click_highlightGrid(roundX, roundY);
-        Debug.Log("行先を選択");
+        // Debug.Log("行先を選択");
     }
 }

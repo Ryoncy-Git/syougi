@@ -103,7 +103,8 @@ public class Scr_Piece : MonoBehaviour
     }
     public void OnMouseDown()
     {
-        gameManager.SelectPiece(this);
+        if(gameManager.Get_is1PTurn() == is1PPiece)
+            gameManager.SelectPiece(this);
     }
 
     public void Select()
@@ -202,6 +203,8 @@ public class Scr_Piece : MonoBehaviour
 
         gameManager.Hide_highlightGrid();
         gameManager.DeselectPiece();
+
+        gameManager.Change_turn();
     }
 
     public bool Get_is1PPiece()

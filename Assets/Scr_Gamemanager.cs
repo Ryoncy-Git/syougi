@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class Scr_GameManager : MonoBehaviour
 {
+    public GameObject prefab_highlightGrid;
     private Scr_Piece selectedPiece;
     private GameObject[,] grid = new GameObject[9, 9];
     private GameObject[,] highlightGrid = new GameObject[9, 9];
@@ -14,31 +15,31 @@ public class Scr_GameManager : MonoBehaviour
 
     void Start()
     {
-        Scr_ui = GameObject.Find("UserInterface").GetComponent<Scr_UI>();
         Init();
+
+        Scr_ui.Show_capturedPiece(capturedPieces_1P, capturedPieces_2P);
+
     }
 
     void Init()
     {
-        // initialize of highlightGrid
-        GameObject[] foundObjects = GameObject.FindGameObjectsWithTag("Tag_highlightGrid");
+        Scr_ui = GameObject.Find("UserInterface").GetComponent<Scr_UI>();
 
-        int index = 0;
+        // initialize of highlightGrid
         for (int y = 0; y < 9; y++)
         {
             for (int x = 0; x < 9; x++)
             {
-                if (index < foundObjects.Length)
-                {
-                    highlightGrid[x, y] = foundObjects[index];
-                    index++;
+                GameObject generated =
+                Instantiate(prefab_highlightGrid, new Vector3(x, y, -2),
+                            Quaternion.identity, GameObject.Find("Obj_highlightGrid").transform);
 
-                    highlightGrid[x, y].transform.position = new Vector3(x, y, -2);
-                    highlightGrid[x, y].transform.localScale = new Vector3(0.7f, 0.7f, 1);
-                    highlightGrid[x, y].SetActive(false);
-                }
+                highlightGrid[x, y] = generated;
+                generated.SetActive(false);
             }
         }
+
+
 
         // initialize of capturedPieces
         foreach (PieceType type in System.Enum.GetValues(typeof(PieceType)))
@@ -80,6 +81,11 @@ public class Scr_GameManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public bool Get_is1PTurn()
+    {
+        return is1PTurn;
     }
 
     public void Change_turn()
@@ -178,5 +184,7 @@ public class Scr_GameManager : MonoBehaviour
         {
             Destroy(piece);
         }
+
+        Scr_ui.Show_capturedPiece(capturedPieces_1P, capturedPieces_2P);
     }
 }
