@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 public class Scr_UI : MonoBehaviour
 {
-    Scr_GameManager gameManager;
-    GameObject UI_Nari;
+    public Scr_GameManager gameManager;
+    public GameObject UI_Nari;
     public TMP_Text text_capturedPiece1;
     public TMP_Text text_capturedPiece2;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gameManager = GameObject.Find("Obj_GameManager").GetComponent<Scr_GameManager>();
-        UI_Nari = GameObject.Find("UI_Nari");
+        // gameManager = GameObject.Find("Obj_GameManager").GetComponent<Scr_GameManager>();
+        // UI_Nari = GameObject.Find("UI_Nari");
         UI_Nari.SetActive(false);
     }
 

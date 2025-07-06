@@ -3,15 +3,20 @@ using System.Collections.Generic;
 
 public class Scr_GameManager : MonoBehaviour
 {
+    // instances
     public GameObject prefab_highlightGrid;
+    public Scr_UI Scr_ui;
+
     private Scr_Piece selectedPiece;
+
+    // variants
     private GameObject[,] grid = new GameObject[9, 9];
     private GameObject[,] highlightGrid = new GameObject[9, 9];
     bool is1PTurn = true;
     Dictionary<PieceType, int> capturedPieces_1P = new Dictionary<PieceType, int>();
     Dictionary<PieceType, int> capturedPieces_2P = new Dictionary<PieceType, int>();
     int NaruX, NaruY;
-    Scr_UI Scr_ui;
+    
 
     void Start()
     {
@@ -23,8 +28,6 @@ public class Scr_GameManager : MonoBehaviour
 
     void Init()
     {
-        Scr_ui = GameObject.Find("UserInterface").GetComponent<Scr_UI>();
-
         // initialize of highlightGrid
         for (int y = 0; y < 9; y++)
         {

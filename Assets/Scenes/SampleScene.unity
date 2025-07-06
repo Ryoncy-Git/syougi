@@ -466,7 +466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &232826280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,6 +564,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a4533ee4262aba439dd251f119285ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1835520706}
+  UI_Nari: {fileID: 519046927}
   text_capturedPiece1: {fileID: 1880245537}
   text_capturedPiece2: {fileID: 264491777}
 --- !u!1 &264491775
@@ -2902,6 +2904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab_highlightGrid: {fileID: 3943238285927004365, guid: ff2f891a2ff9ab44d81236ce87e2c483, type: 3}
+  Scr_ui: {fileID: 232826284}
 --- !u!1 &1840270955
 GameObject:
   m_ObjectHideFlags: 0
