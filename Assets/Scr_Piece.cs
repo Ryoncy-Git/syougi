@@ -115,7 +115,7 @@ public class Scr_Piece : MonoBehaviour
 
     public void Deselect()
     {
-        sr.color = Color.white;
+        sr.color = is1PPiece ? Color.blue : Color.red;
         gameManager.Hide_highlightGrid();
     }
 
@@ -125,7 +125,7 @@ public class Scr_Piece : MonoBehaviour
         int roundY = Mathf.RoundToInt(transform.position.y);
 
         // gamemanagerのほうで範囲外のものははじくようにできているから、
-        // show_highlightGridでこっちでは盤面内かどうかを判定する必要はない
+        // show_highlightGrid でこっちでは盤面内かどうかを判定する必要はない
         // ただし、駒があるかどうかは判定しないためそこは見る必要がある
         switch (pieceType)
         {
