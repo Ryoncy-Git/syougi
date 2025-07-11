@@ -17,7 +17,7 @@ public class Scr_GameManager : MonoBehaviour
     Dictionary<PieceType, int> capturedPieces_1P = new Dictionary<PieceType, int>();
     Dictionary<PieceType, int> capturedPieces_2P = new Dictionary<PieceType, int>();
     int NaruX, NaruY;
-    bool isSpawnTurn = true;
+    bool isSpawnTurn = false;
     bool isNariUIActive = false;
     public GameObject[] pieces;
     GameObject piece_willPut;
@@ -56,7 +56,7 @@ public class Scr_GameManager : MonoBehaviour
             capturedPieces_2P[type] = 0;
         }
 
-
+        isSpawnTurn = false;
 
     }
 
@@ -140,12 +140,11 @@ public class Scr_GameManager : MonoBehaviour
             {
                 NaruX = x;
                 NaruY = y;
-                // なる画面のUIを表示
-                isNariUIActive = true;
-                Scr_ui.Show_NariSelect();
-
+                
                 // 入力をUI以外無効化
-                // Scr_ui.mukouka();
+                isNariUIActive = true;
+                // なる画面のUIを表示
+                Scr_ui.Show_NariSelect();
             }
             else
             {

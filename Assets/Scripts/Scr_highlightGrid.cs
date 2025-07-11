@@ -7,7 +7,7 @@ public class Scr_highlightGrid : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        gameManager = GameObject.Find("Obj_GameManager").GetComponent<Scr_GameManager>();// インスペクターから直接指定ができないのでこれ
     }
 
     // Update is called once per frame
@@ -18,6 +18,9 @@ public class Scr_highlightGrid : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (gameManager == null)
+            return;
+            
         // マウスがUIの上にあるかチェック
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
