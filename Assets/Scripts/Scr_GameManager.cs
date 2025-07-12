@@ -48,8 +48,7 @@ public class Scr_GameManager : MonoBehaviour
         }
 
 
-
-        // initialize of capturedPieces
+        // initialize of capturedPieces     
         foreach (PieceType type in System.Enum.GetValues(typeof(PieceType)))
         {
             capturedPieces_1P[type] = 0;
@@ -58,7 +57,87 @@ public class Scr_GameManager : MonoBehaviour
 
         isSpawnTurn = false;
 
+        Put_initPiece();
     }
+
+// --------------------------------------------------
+    void Put_initPiece()
+    {
+        // Hu（歩）: 横一列ずつ配置
+        GameObject hu = GetPrefabByPieceType(PieceType.Hu);
+        for (int i = 0; i < 9; i++)
+        {
+            PlacePiece(hu, i, 2, true);
+            PlacePiece(hu, i, 6, false);
+        }
+
+        // Kyosya（香車）
+        GameObject kyosya = GetPrefabByPieceType(PieceType.Kyosya);
+        PlaceMirrorPair(kyosya, 0, 0);
+        PlaceMirrorPair(kyosya, 0, 8, false);
+
+        // Keima（桂馬）
+        GameObject keima = GetPrefabByPieceType(PieceType.Keima);
+        PlaceMirrorPair(keima, 1, 0);
+        PlaceMirrorPair(keima, 1, 8, false);
+
+        // Gin（銀）
+        GameObject gin = GetPrefabByPieceType(PieceType.Gin);
+        PlaceMirrorPair(gin, 2, 0);
+        PlaceMirrorPair(gin, 2, 8, false);
+
+        // Kin（金）
+        GameObject kin = GetPrefabByPieceType(PieceType.Kin);
+        PlaceMirrorPair(kin, 3, 0);
+        PlaceMirrorPair(kin, 3, 8, false);
+
+        // Kaku（角）
+        GameObject kaku = GetPrefabByPieceType(PieceType.Kaku);
+        PlacePiece(kaku, 7, 1, true);
+        PlacePiece(kaku, 1, 7, false);
+
+        // Hisya（飛車）
+        GameObject hisya = GetPrefabByPieceType(PieceType.Hisya);
+        PlacePiece(hisya, 1, 1, true);
+        PlacePiece(hisya, 7, 7, false);
+
+        // Ou（王）
+        GameObject ou = GetPrefabByPieceType(PieceType.Ou);
+        PlacePiece(ou, 4, 0, true);
+        PlacePiece(ou, 4, 8, false);
+    }
+
+    // 指定のPieceTypeのPrefabを取得
+    GameObject GetPrefabByPieceType(PieceType type)
+    {
+        foreach (GameObject p in pieces)
+        {
+            Scr_Piece scrPiece = p.GetComponent<Scr_Piece>();
+            if (scrPiece != null && scrPiece.Get_PieceType() == type)
+            {
+                return p;
+            }
+        }
+        Debug.LogError($"PieceType {type} が pieces に見つかりませんでした！");
+        return null;
+    }
+
+    // 駒を1つだけ配置
+    void PlacePiece(GameObject prefab, int x, int y, bool is1P)
+    {
+        if (prefab == null) return;
+        Instantiate(prefab, new Vector3(x, y, -1), Quaternion.identity, Koma.transform)
+            .GetComponent<Scr_Piece>().Set_is1PPiece(is1P);
+    }
+
+    // 左右対称に2つ配置（左と右）
+    void PlaceMirrorPair(GameObject prefab, int offsetX, int y, bool is1PTurnBottom = true)
+    {
+        PlacePiece(prefab, offsetX, y, is1PTurnBottom);
+        PlacePiece(prefab, 8 - offsetX, y, is1PTurnBottom);
+    }
+
+// --------------------------------------------------------
 
     public void SelectPiece(Scr_Piece piece)
     {
@@ -163,6 +242,7 @@ public class Scr_GameManager : MonoBehaviour
             Set_GridGameObject(inst, x, y);
 
             isSpawnTurn = false;
+            Hide_highlightGrid();
 
             Change_turn();
         }

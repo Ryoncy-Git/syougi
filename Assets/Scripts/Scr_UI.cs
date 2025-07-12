@@ -9,18 +9,26 @@ public class Scr_UI : MonoBehaviour
     public TMP_Text text_capturedPiece1;
     public TMP_Text text_capturedPiece2;
     public GameObject UI_selectPutPiece;
+    public GameObject UI_default;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // gameManager = GameObject.Find("Obj_GameManager").GetComponent<Scr_GameManager>();
-        // UI_Nari = GameObject.Find("UI_Nari");
-        UI_Nari.SetActive(false);
+        Hide_AllUI();
+
+        UI_default.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    void Hide_AllUI()
+    {
+        UI_Nari.SetActive(false);
+        UI_selectPutPiece.SetActive(false);
+        UI_default.SetActive(false);
     }
 
     // UI Nari
@@ -37,16 +45,30 @@ public class Scr_UI : MonoBehaviour
 
     public void Show_NariSelect()
     {
+        Hide_AllUI();
         UI_Nari.SetActive(true);
     }
 
     public void Hide_NariSelect()
     {
         UI_Nari.SetActive(false);
+        UI_default.SetActive(true);
     }
 
-    // show capturedPiece
+    public void Show_selectPutPiece()
+    {
+        Hide_AllUI();
+        gameManager.Hide_highlightGrid();
+        UI_selectPutPiece.SetActive(true);
+    }
 
+    public void Hide_selectPutPiece()
+    {
+        UI_selectPutPiece.SetActive(false);
+        UI_default.SetActive(true);
+    }
+    
+    
     public void Show_capturedPiece(Dictionary<PieceType, int> piece1, Dictionary<PieceType, int> piece2)
     {
         text_capturedPiece1.text = BuildCapturedPieceText(piece1, "1P");
@@ -68,18 +90,9 @@ public class Scr_UI : MonoBehaviour
         return dict.ContainsKey(type) ? dict[type] : 0;
     }
 
-    // select put piece
 
-    public void Show_selectPutPiece()
-    {
-        UI_selectPutPiece.SetActive(true);
-    }
 
-    public void Hide_selectPutPiece()
-    {
-        UI_selectPutPiece.SetActive(false);
-    }
-    void Show_Grid_and_Hide_UI()
+    void Show_Grid_and_Hide_UI() //手ごまを置くときのやつ
     {
         for (int i = 0; i < 9; i++)
         {
@@ -98,12 +111,42 @@ public class Scr_UI : MonoBehaviour
     public void Click_Hu()
     {
         gameManager.Set_piece_willPut(PieceType.Hu);
-
         Show_Grid_and_Hide_UI();
     }
 
     public void Click_Kyosya()
     {
+        gameManager.Set_piece_willPut(PieceType.Kyosya);
+        Show_Grid_and_Hide_UI();
+    }
 
+    public void Click_Keima()
+    {
+        gameManager.Set_piece_willPut(PieceType.Keima);
+        Show_Grid_and_Hide_UI();
+    }
+
+    public void Click_Gin()
+    {
+        gameManager.Set_piece_willPut(PieceType.Gin);
+        Show_Grid_and_Hide_UI();
+    }
+
+    public void Click_Kin()
+    {
+        gameManager.Set_piece_willPut(PieceType.Kin);
+        Show_Grid_and_Hide_UI();
+    }
+
+    public void Click_Kaku()
+    {
+        gameManager.Set_piece_willPut(PieceType.Kaku);
+        Show_Grid_and_Hide_UI();
+    }
+
+    public void Click_Hisya()
+    {
+        gameManager.Set_piece_willPut(PieceType.Hisya);
+        Show_Grid_and_Hide_UI();
     }
 }

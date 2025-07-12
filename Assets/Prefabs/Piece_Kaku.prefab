@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6833865543495811081}
   - component: {fileID: 7937888665708780674}
   m_Layer: 0
-  m_Name: Piece_Hu
+  m_Name: Piece_Kaku
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1867586154143766238, guid: ccc569b78fcda4b418aa5d5562567b6a, type: 3}
+  m_Sprite: {fileID: -8183449179137918729, guid: 02a26c4b480869c428465449b7b4f1bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -147,6 +147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf1e25b4314fe64c8549514ae8273d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pieceType: 0
+  pieceType: 6
   is1PPiece: 1
   isNari: 0

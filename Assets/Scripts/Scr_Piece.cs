@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class Scr_Piece : MonoBehaviour
 {
-
     //transform.position - (x, y, -1);
-    PieceType pieceType;
+    [SerializeField] PieceType pieceType;
     public bool is1PPiece = true;
     public bool isNari = false;
     // bool isSelected = false;
     Scr_GameManager gameManager;
     Scr_PieceMovement pieceMovement;
     SpriteRenderer sr;
+
+
 
 
 
@@ -103,7 +104,7 @@ public class Scr_Piece : MonoBehaviour
     }
     public void OnMouseDown()
     {
-        if(gameManager.Get_is1PTurn() == is1PPiece)
+        if (gameManager.Get_is1PTurn() == is1PPiece)
             gameManager.SelectPiece(this);
     }
 
@@ -115,7 +116,7 @@ public class Scr_Piece : MonoBehaviour
 
     public void Deselect()
     {
-        sr.color = is1PPiece ? Color.blue : Color.red;
+        sr.color = Color.white;
         gameManager.Hide_highlightGrid();
     }
 
@@ -205,6 +206,11 @@ public class Scr_Piece : MonoBehaviour
         gameManager.DeselectPiece();
 
         gameManager.Change_turn();
+    }
+
+    public void Set_is1PPiece(bool state)
+    {
+        is1PPiece = state;
     }
 
     public bool Get_is1PPiece()
