@@ -67,8 +67,8 @@ public class Scr_UI : MonoBehaviour
         UI_selectPutPiece.SetActive(false);
         UI_default.SetActive(true);
     }
-    
-    
+
+
     public void Show_capturedPiece(Dictionary<PieceType, int> piece1, Dictionary<PieceType, int> piece2)
     {
         text_capturedPiece1.text = BuildCapturedPieceText(piece1, "1P");
@@ -110,43 +110,52 @@ public class Scr_UI : MonoBehaviour
 
     public void Click_Hu()
     {
-        gameManager.Set_piece_willPut(PieceType.Hu);
-        Show_Grid_and_Hide_UI();
+        TrySelectCapturedPiece(PieceType.Hu);
     }
 
     public void Click_Kyosya()
     {
-        gameManager.Set_piece_willPut(PieceType.Kyosya);
-        Show_Grid_and_Hide_UI();
+        TrySelectCapturedPiece(PieceType.Kyosya);
     }
 
     public void Click_Keima()
     {
-        gameManager.Set_piece_willPut(PieceType.Keima);
-        Show_Grid_and_Hide_UI();
+        TrySelectCapturedPiece(PieceType.Keima);
     }
 
     public void Click_Gin()
     {
-        gameManager.Set_piece_willPut(PieceType.Gin);
-        Show_Grid_and_Hide_UI();
+        TrySelectCapturedPiece(PieceType.Gin);
     }
 
     public void Click_Kin()
     {
-        gameManager.Set_piece_willPut(PieceType.Kin);
-        Show_Grid_and_Hide_UI();
+        TrySelectCapturedPiece(PieceType.Kin);
     }
 
     public void Click_Kaku()
     {
-        gameManager.Set_piece_willPut(PieceType.Kaku);
-        Show_Grid_and_Hide_UI();
+        TrySelectCapturedPiece(PieceType.Kaku);
     }
 
     public void Click_Hisya()
     {
-        gameManager.Set_piece_willPut(PieceType.Hisya);
+        TrySelectCapturedPiece(PieceType.Hisya);
+    }
+    
+    private void TrySelectCapturedPiece(PieceType type)
+    {
+        Dictionary<PieceType, int> dict = gameManager.Get_is1PTurn()
+            ? gameManager.Get_CapturedPiece1P()
+            : gameManager.Get_CapturedPiece2P();
+
+        if (!dict.ContainsKey(type) || dict[type] <= 0)
+        {
+            // 持ち駒がない場合は選択不可
+            return;
+        }
+
+        gameManager.Set_piece_willPut(type);
         Show_Grid_and_Hide_UI();
     }
 }

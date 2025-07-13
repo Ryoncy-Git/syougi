@@ -60,7 +60,7 @@ public class Scr_GameManager : MonoBehaviour
         Put_initPiece();
     }
 
-// --------------------------------------------------
+    // --------------------------------------------------
     void Put_initPiece()
     {
         // Hu（歩）: 横一列ずつ配置
@@ -93,13 +93,13 @@ public class Scr_GameManager : MonoBehaviour
 
         // Kaku（角）
         GameObject kaku = GetPrefabByPieceType(PieceType.Kaku);
-        PlacePiece(kaku, 7, 1, true);
-        PlacePiece(kaku, 1, 7, false);
+        PlacePiece(kaku, 1, 1, true);
+        PlacePiece(kaku, 7, 7, false);
 
         // Hisya（飛車）
         GameObject hisya = GetPrefabByPieceType(PieceType.Hisya);
-        PlacePiece(hisya, 1, 1, true);
-        PlacePiece(hisya, 7, 7, false);
+        PlacePiece(hisya, 7, 1, true);
+        PlacePiece(hisya, 1, 7, false);
 
         // Ou（王）
         GameObject ou = GetPrefabByPieceType(PieceType.Ou);
@@ -137,7 +137,7 @@ public class Scr_GameManager : MonoBehaviour
         PlacePiece(prefab, 8 - offsetX, y, is1PTurnBottom);
     }
 
-// --------------------------------------------------------
+    // --------------------------------------------------------
 
     public void SelectPiece(Scr_Piece piece)
     {
@@ -206,47 +206,63 @@ public class Scr_GameManager : MonoBehaviour
     {
         if (isNariUIActive)
             return;
-            
-            
-        if (!isSpawnTurn)// グリッドのクリックが移動のターン中の処理
-        {
-            bool canNari = false;
-            int prevY = Mathf.RoundToInt(selectedPiece.transform.position.y);
-            canNari = (selectedPiece.Get_is1PPiece() && y >= 6) || (selectedPiece.Get_is1PPiece() && prevY >= 6) ||
-                    (!selectedPiece.Get_is1PPiece() && y <= 2) || (!selectedPiece.Get_is1PPiece() && prevY <= 2);
 
-            if (canNari && !selectedPiece.Get_isNari())
+        if (isSpawnTurn)
+            HandleSpawnTurn(x, y);
+        else
+            HandleMoveTurn(x, y);
+        
+    }
+
+    void HandleMoveTurn(int x, int y)
+    {
+        bool canNari = false;
+        int prevY = Mathf.RoundToInt(selectedPiece.transform.position.y);
+        canNari = (selectedPiece.Get_is1PPiece() && y >= 6) || (selectedPiece.Get_is1PPiece() && prevY >= 6) ||
+                (!selectedPiece.Get_is1PPiece() && y <= 2) || (!selectedPiece.Get_is1PPiece() && prevY <= 2);
+
+        if (canNari && !selectedPiece.Get_isNari())
+        {
+            NaruX = x;
+            NaruY = y;
+            // 入力をUI以外無効化
+            isNariUIActive = true;
+            // なる画面のUIを表示
+            Scr_ui.Show_NariSelect();
+        }
+        else
+        {
+            if (selectedPiece != null)
             {
-                NaruX = x;
-                NaruY = y;
-                
-                // 入力をUI以外無効化
-                isNariUIActive = true;
-                // なる画面のUIを表示
-                Scr_ui.Show_NariSelect();
-            }
-            else
-            {
-                if (selectedPiece != null)
-                {
-                    selectedPiece.Movement(x, y);
-                }
+                selectedPiece.Movement(x, y);
             }
         }
+    }
 
-        else if (isSpawnTurn)// グリッドのクリックが手駒を置くターン中の処理
+    void HandleSpawnTurn(int x, int y)
+    {
+        // 駒の生成
+        GameObject inst =
+        Instantiate(piece_willPut, new Vector3(x, y, -1), Quaternion.identity, Koma.transform);
+        Set_GridGameObject(inst, x, y);
+        inst.GetComponent<Scr_Piece>().Set_is1PPiece(is1PTurn);
+
+        // 対応する持ち駒を一つ減らす
+        PieceType pieceType =
+        piece_willPut.GetComponent<Scr_Piece>().Get_PieceType();
+        if (is1PTurn)
         {
-            GameObject inst =
-            Instantiate(piece_willPut, new Vector3(x, y, -1), Quaternion.identity, Koma.transform);
-
-            Set_GridGameObject(inst, x, y);
-
-            isSpawnTurn = false;
-            Hide_highlightGrid();
-
-            Change_turn();
+            capturedPieces_1P[pieceType] -= 1;
+        }
+        else
+        {
+            capturedPieces_2P[pieceType] -= 1;
         }
 
+        // ターンの変更、グリッドの非表示など
+        isSpawnTurn = false;
+        Hide_highlightGrid();
+        Change_turn();
     }
 
     public void Click_Naru()
@@ -281,20 +297,12 @@ public class Scr_GameManager : MonoBehaviour
 
         PieceType targetPieceType = targetPiece.Get_PieceType();
 
-        if (is1P)
-        {
-            if (capturedPieces_1P.ContainsKey(targetPieceType))
-                capturedPieces_1P[targetPieceType]++;
-            else
-                capturedPieces_1P[targetPieceType] = 1;
-        }
+        var dict = is1P ? capturedPieces_1P : capturedPieces_2P;
+        if (dict.ContainsKey(targetPieceType))
+            dict[targetPieceType]++;
         else
-        {
-            if (capturedPieces_2P.ContainsKey(targetPieceType))
-                capturedPieces_2P[targetPieceType]++;
-            else
-                capturedPieces_2P[targetPieceType] = 1;
-        }
+            dict[targetPieceType] = 1;
+        
 
         if (piece != null)
         {
@@ -323,5 +331,15 @@ public class Scr_GameManager : MonoBehaviour
                 break; // 最初に見つかった1つで十分なら break でループを抜ける
             }
         }
+    }
+
+    public Dictionary<PieceType, int> Get_CapturedPiece1P()
+    {
+        return capturedPieces_1P;
+    }
+
+    public Dictionary<PieceType, int> Get_CapturedPiece2P()
+    {
+        return capturedPieces_2P;
     }
 }

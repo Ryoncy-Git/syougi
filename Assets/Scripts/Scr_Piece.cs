@@ -36,71 +36,7 @@ public class Scr_Piece : MonoBehaviour
 
     void InitPiece()
     {
-
-        // インスペクターから設定でもいいかも
-        pieceType = PieceType.None;
-
-        int x = Mathf.RoundToInt(transform.position.x);
-        int y = Mathf.RoundToInt(transform.position.y);
-
-        if (y < 4)
-        {
-            is1PPiece = true;
-        }
-        else
-        {
-            is1PPiece = false;
-        }
-
-        gameManager.Set_GridGameObject(transform.gameObject, x, y);
-
-        if (y == 2 || y == 6)
-        {
-            pieceType = PieceType.Hu;
-        }
-        else if (y == 1 || y == 7)
-        {
-            if (x == y)
-            {
-                pieceType = PieceType.Kaku;
-            }
-            else
-            {
-                pieceType = PieceType.Hisya;
-            }
-        }
-        else if (y == 0 || y == 8)
-        {
-            switch (x)
-            {
-                case 0:
-                case 8:
-                    pieceType = PieceType.Kyosya;
-                    break;
-
-                case 1:
-                case 7:
-                    pieceType = PieceType.Keima;
-                    break;
-
-                case 2:
-                case 6:
-                    pieceType = PieceType.Gin;
-                    break;
-
-                case 3:
-                case 5:
-                    pieceType = PieceType.Kin;
-                    break;
-
-                case 4:
-                    pieceType = PieceType.Ou;
-                    break;
-
-                default:
-                    break;
-            }
-        }
+        
     }
     public void OnMouseDown()
     {
@@ -128,34 +64,32 @@ public class Scr_Piece : MonoBehaviour
         // gamemanagerのほうで範囲外のものははじくようにできているから、
         // show_highlightGrid でこっちでは盤面内かどうかを判定する必要はない
         // ただし、駒があるかどうかは判定しないためそこは見る必要がある
+        bool isKinLike = isNari && 
+        (pieceType == PieceType.Hu || pieceType == PieceType.Kyosya || 
+        pieceType == PieceType.Keima || pieceType == PieceType.Gin);
+
+        if (isKinLike || pieceType == PieceType.Kin)
+        {
+            pieceMovement.Show_path_Kin(roundX, roundY, is1PPiece);
+            return;
+        }
+
         switch (pieceType)
         {
             case PieceType.Hu:
-                if (isNari)
-                    pieceMovement.Show_path_Kin(roundX, roundY, is1PPiece);
-                else
-                    pieceMovement.Show_path_Hu(roundX, roundY, is1PPiece);
+                pieceMovement.Show_path_Hu(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Kyosya:
-                if (isNari)
-                    pieceMovement.Show_path_Kin(roundX, roundY, is1PPiece);
-                else
-                    pieceMovement.Show_path_Kyosya(roundX, roundY, is1PPiece);
+                pieceMovement.Show_path_Kyosya(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Keima:
-                if (isNari)
-                    pieceMovement.Show_path_Kin(roundX, roundY, is1PPiece);
-                else
-                    pieceMovement.Show_path_Keima(roundX, roundY, is1PPiece);
+                pieceMovement.Show_path_Keima(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Gin:
-                if (isNari)
-                    pieceMovement.Show_path_Kin(roundX, roundY, is1PPiece);
-                else
-                    pieceMovement.Show_path_Gin(roundX, roundY, is1PPiece);
+                pieceMovement.Show_path_Gin(roundX, roundY, is1PPiece);
                 break;
 
             case PieceType.Kin:
