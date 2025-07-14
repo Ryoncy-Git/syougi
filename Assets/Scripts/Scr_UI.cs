@@ -10,6 +10,8 @@ public class Scr_UI : MonoBehaviour
     public TMP_Text text_capturedPiece2;
     public GameObject UI_selectPutPiece;
     public GameObject UI_default;
+    public GameObject UI_Settled;
+    public TMP_Text text_winner;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,6 +31,7 @@ public class Scr_UI : MonoBehaviour
         UI_Nari.SetActive(false);
         UI_selectPutPiece.SetActive(false);
         UI_default.SetActive(false);
+        UI_Settled.SetActive(false);
     }
 
     // UI Nari
@@ -142,7 +145,7 @@ public class Scr_UI : MonoBehaviour
     {
         TrySelectCapturedPiece(PieceType.Hisya);
     }
-    
+
     private void TrySelectCapturedPiece(PieceType type)
     {
         Dictionary<PieceType, int> dict = gameManager.Get_is1PTurn()
@@ -157,5 +160,15 @@ public class Scr_UI : MonoBehaviour
 
         gameManager.Set_piece_willPut(type);
         Show_Grid_and_Hide_UI();
+    }
+
+    public void Settled(bool is1PTurn)
+    {
+        string playerLabel = "2P";
+        if (is1PTurn)
+            playerLabel = "1P";
+
+        UI_Settled.SetActive(true);
+        text_winner.text = $"{playerLabel} win!!";
     }
 }

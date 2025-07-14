@@ -125,7 +125,7 @@ public class Scr_Piece : MonoBehaviour
         int prevX = Mathf.RoundToInt(transform.position.x);
         int prevY = Mathf.RoundToInt(transform.position.y);
 
-        transform.position = new Vector3(x, y, -1);
+        
         GameObject targetObject = gameManager.Get_GridGameObject(x, y);
         if (targetObject != null)//cacth
         {
@@ -133,6 +133,7 @@ public class Scr_Piece : MonoBehaviour
             gameManager.Capture_piece(targetObject, is1PPiece);
         }
 
+        transform.position = new Vector3(x, y, -1);
         gameManager.Set_GridGameObject(null, prevX, prevY);
         gameManager.Set_GridGameObject(this.gameObject, x, y);
 

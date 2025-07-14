@@ -125,8 +125,12 @@ public class Scr_GameManager : MonoBehaviour
     // 駒を1つだけ配置
     void PlacePiece(GameObject prefab, int x, int y, bool is1P)
     {
+        Quaternion rotation = is1P
+        ? Quaternion.identity
+        : Quaternion.Euler(0, 0, 180);
+
         if (prefab == null) return;
-        Instantiate(prefab, new Vector3(x, y, -1), Quaternion.identity, Koma.transform)
+        Instantiate(prefab, new Vector3(x, y, -1), rotation, Koma.transform)
             .GetComponent<Scr_Piece>().Set_is1PPiece(is1P);
     }
 
@@ -159,6 +163,7 @@ public class Scr_GameManager : MonoBehaviour
     {
         if (x >= 0 && x < 9 && y >= 0 && y < 9)
         {
+            Debug.Log($"Grid[{x},{y}] = {(grid[x, y] ? grid[x, y].name : "null")}");
             grid[x, y] = piece;
         }
     }
@@ -241,9 +246,15 @@ public class Scr_GameManager : MonoBehaviour
 
     void HandleSpawnTurn(int x, int y)
     {
+        
+        Quaternion rotation = is1PTurn
+        ? Quaternion.identity
+        : Quaternion.Euler(0, 0, 180);
+
+
         // 駒の生成
         GameObject inst =
-        Instantiate(piece_willPut, new Vector3(x, y, -1), Quaternion.identity, Koma.transform);
+        Instantiate(piece_willPut, new Vector3(x, y, -1), rotation, Koma.transform);
         Set_GridGameObject(inst, x, y);
         inst.GetComponent<Scr_Piece>().Set_is1PPiece(is1PTurn);
 
@@ -297,12 +308,15 @@ public class Scr_GameManager : MonoBehaviour
 
         PieceType targetPieceType = targetPiece.Get_PieceType();
 
+        if (targetPieceType == PieceType.Ou)
+            Scr_ui.Settled(is1PTurn);
+
         var dict = is1P ? capturedPieces_1P : capturedPieces_2P;
         if (dict.ContainsKey(targetPieceType))
             dict[targetPieceType]++;
         else
             dict[targetPieceType] = 1;
-        
+
 
         if (piece != null)
         {
@@ -310,6 +324,8 @@ public class Scr_GameManager : MonoBehaviour
         }
 
         Scr_ui.Show_capturedPiece(capturedPieces_1P, capturedPieces_2P);
+        
+        Debug.Log($"キャプチャ対象: {targetPieceType}, 自分のターン: {is1P}, 駒の持ち主: {targetPiece.Get_is1PPiece()}");
     }
 
     public void Set_isSpawnTurn(bool state)
