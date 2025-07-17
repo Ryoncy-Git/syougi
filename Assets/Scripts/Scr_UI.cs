@@ -5,6 +5,9 @@ using System.Collections.Generic;
 public class Scr_UI : MonoBehaviour
 {
     public Scr_GameManager gameManager;
+    public Scr_PieceFactory pieceFactory;
+    public Scr_highlightGrid scr_highlightGrid;
+    public Scr_CaptureManager captureManager;
     public GameObject UI_Nari;
     public TMP_Text text_capturedPiece1;
     public TMP_Text text_capturedPiece2;
@@ -12,12 +15,19 @@ public class Scr_UI : MonoBehaviour
     public GameObject UI_default;
     public GameObject UI_Settled;
     public TMP_Text text_winner;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Hide_AllUI();
 
         UI_default.SetActive(true);
+
+        Show_capturedPiece
+        (
+            captureManager.Get_CapturedPiece1P(),
+            captureManager.Get_CapturedPiece2P()
+        );
     }
 
     // Update is called once per frame
@@ -61,7 +71,7 @@ public class Scr_UI : MonoBehaviour
     public void Show_selectPutPiece()
     {
         Hide_AllUI();
-        gameManager.Hide_highlightGrid();
+        scr_highlightGrid.Hide_highlightGrid();
         UI_selectPutPiece.SetActive(true);
     }
 
@@ -102,7 +112,7 @@ public class Scr_UI : MonoBehaviour
             for (int j = 0; j < 9; j++)
             {
                 if (gameManager.Get_GridGameObject(i, j) == null)
-                    gameManager.Show_highlightGrid(i, j);
+                    scr_highlightGrid.Show_highlightGrid(i, j);
             }
         }
 
@@ -149,8 +159,8 @@ public class Scr_UI : MonoBehaviour
     private void TrySelectCapturedPiece(PieceType type)
     {
         Dictionary<PieceType, int> dict = gameManager.Get_is1PTurn()
-            ? gameManager.Get_CapturedPiece1P()
-            : gameManager.Get_CapturedPiece2P();
+            ? captureManager.Get_CapturedPiece1P()
+            : captureManager.Get_CapturedPiece2P();
 
         if (!dict.ContainsKey(type) || dict[type] <= 0)
         {
@@ -158,7 +168,7 @@ public class Scr_UI : MonoBehaviour
             return;
         }
 
-        gameManager.Set_piece_willPut(type);
+        pieceFactory.Set_piece_willPut(type);
         Show_Grid_and_Hide_UI();
     }
 

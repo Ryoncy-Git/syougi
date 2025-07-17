@@ -10,10 +10,8 @@ public class Scr_Piece : MonoBehaviour
     Scr_GameManager gameManager;
     Scr_PieceMovement pieceMovement;
     SpriteRenderer sr;
-
-
-
-
+    public Scr_highlightGrid scr_highlightGrid;
+    public Scr_CaptureManager captureManager;
 
     void Start()
     {
@@ -53,7 +51,7 @@ public class Scr_Piece : MonoBehaviour
     public void Deselect()
     {
         sr.color = Color.white;
-        gameManager.Hide_highlightGrid();
+        scr_highlightGrid.Hide_highlightGrid();
     }
 
     void Show_path()
@@ -130,14 +128,14 @@ public class Scr_Piece : MonoBehaviour
         if (targetObject != null)//cacth
         {
             // 持ち駒 = gameManager.Get_GridGameObject(x, y);
-            gameManager.Capture_piece(targetObject, is1PPiece);
+            captureManager.Capture_piece(targetObject, is1PPiece);
         }
 
         transform.position = new Vector3(x, y, -1);
         gameManager.Set_GridGameObject(null, prevX, prevY);
         gameManager.Set_GridGameObject(this.gameObject, x, y);
 
-        gameManager.Hide_highlightGrid();
+        scr_highlightGrid.Hide_highlightGrid();
         gameManager.DeselectPiece();
 
         gameManager.Change_turn();

@@ -3,6 +3,7 @@ using UnityEngine;
 public class Scr_PieceMovement
 {
     private Scr_GameManager gameManager;
+    public Scr_highlightGrid scr_highlightGrid;
     public Scr_PieceMovement(Scr_GameManager manager)
     {
         this.gameManager = manager;
@@ -27,14 +28,14 @@ public class Scr_PieceMovement
             GameObject target = gameManager.Get_GridGameObject(x, destY);
             if (target == null)
             {
-                gameManager.Show_highlightGrid(x, destY);
+                scr_highlightGrid.Show_highlightGrid(x, destY);
             }
             else
             {
                 Scr_Piece piece = target.GetComponent<Scr_Piece>();
                 if (piece != null && piece.Get_is1PPiece() != is1P)
                 {
-                    gameManager.Show_highlightGrid(x, destY);
+                    scr_highlightGrid.Show_highlightGrid(x, destY);
                 }
                 break; // 味方 or 敵 どちらでもここで止まる
             }
@@ -129,14 +130,14 @@ public class Scr_PieceMovement
         GameObject target = gameManager.Get_GridGameObject(x, y);
         if (target == null)
         {
-            gameManager.Show_highlightGrid(x, y);
+            scr_highlightGrid.Show_highlightGrid(x, y);
             return true; // 続ける
         }
 
         Scr_Piece piece = target.GetComponent<Scr_Piece>();
         if (piece != null && piece.Get_is1PPiece() != is1P)
         {
-            gameManager.Show_highlightGrid(x, y);
+            scr_highlightGrid.Show_highlightGrid(x, y);
         }
 
         return false; // どちらにせよここで止まる
@@ -148,14 +149,14 @@ public class Scr_PieceMovement
         GameObject target = gameManager.Get_GridGameObject(x, y);
         if (target == null)
         {
-            gameManager.Show_highlightGrid(x, y);
+            scr_highlightGrid.Show_highlightGrid(x, y);
         }
         else
         {
             Scr_Piece piece = target.GetComponent<Scr_Piece>();
             if (piece != null && piece.Get_is1PPiece() != is1P)
             {
-                gameManager.Show_highlightGrid(x, y);
+                scr_highlightGrid.Show_highlightGrid(x, y);
             }
         }
     }
