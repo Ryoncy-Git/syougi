@@ -1,19 +1,16 @@
 using UnityEngine;
 
-public class Scr_PieceMovement
+public class Scr_PieceMovement : MonoBehaviour
 {
-    private Scr_GameManager gameManager;
+    public  Scr_GameManager gameManager;
     public Scr_highlightGrid scr_highlightGrid;
-    public Scr_PieceMovement(Scr_GameManager manager)
-    {
-        this.gameManager = manager;
-    }
 
     public void Show_path_Hu(int x, int y, bool is1P)
     {
         int destX = x;
         int destY = is1P ? y + 1 : y - 1;
         ShowHighlightIfValid(destX, destY, is1P);
+        Debug.Log("showPath");
     }
 
     public void Show_path_Kyosya(int x, int y, bool is1P)

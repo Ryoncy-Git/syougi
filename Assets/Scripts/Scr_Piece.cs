@@ -7,29 +7,36 @@ public class Scr_Piece : MonoBehaviour
     public bool is1PPiece = true;
     public bool isNari = false;
     // bool isSelected = false;
-    Scr_GameManager gameManager;
-    Scr_PieceMovement pieceMovement;
+    private Scr_GameManager gameManager;
+    private Scr_PieceMovement pieceMovement;
+    private Scr_highlightGrid scr_highlightGrid;
+    private Scr_CaptureManager captureManager;
     SpriteRenderer sr;
-    public Scr_highlightGrid scr_highlightGrid;
-    public Scr_CaptureManager captureManager;
 
     void Start()
     {
         Init();
     }
 
-    void Update()
-    {
-
-    }
-
     void Init()
     {
         gameManager = GameObject.Find("Obj_GameManager").GetComponent<Scr_GameManager>();
+        pieceMovement = GameObject.Find("Obj_PieceMovement").GetComponent<Scr_PieceMovement>();
+        scr_highlightGrid = GameObject.Find("Obj_highlightGrid").GetComponent<Scr_highlightGrid>();
+        captureManager = GameObject.Find("Obj_CaptureManager").GetComponent<Scr_CaptureManager>();
+
+        if (gameManager == null || pieceMovement == null || scr_highlightGrid == null || captureManager == null)
+            Debug.Log("Null!!!!!");
+
         sr = GetComponent<SpriteRenderer>();
-        pieceMovement = new Scr_PieceMovement(gameManager);
 
         InitPiece();
+    }
+
+    void Update()
+    {
+        if (gameManager == null || pieceMovement == null || scr_highlightGrid == null || captureManager == null)
+            Debug.Log("Null!!!!!");
     }
 
     void InitPiece()

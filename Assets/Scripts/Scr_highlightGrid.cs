@@ -59,6 +59,9 @@ public class Scr_highlightGrid : MonoBehaviour
         {
             for (int j = 0; j < 9; j++)
             {
+                if (highlightGrid[i, j] == null)
+                    continue;
+                
                 highlightGrid[i, j].SetActive(false);
             }
         }
@@ -66,9 +69,11 @@ public class Scr_highlightGrid : MonoBehaviour
 
     public void Show_highlightGrid(int roundX, int roundY)
     {
+        Debug.Log("In_Show_highlightGrid");
         if (roundX >= 0 && roundX < 9 && roundY >= 0 && roundY < 9 && highlightGrid[roundX, roundY] != null)
         {
             highlightGrid[roundX, roundY].SetActive(true);
+            Debug.Log("showGrid");
         }
     }
 }
