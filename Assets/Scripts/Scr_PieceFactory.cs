@@ -5,7 +5,7 @@ public class Scr_PieceFactory : MonoBehaviour
     public GameObject Obj_Koma;
     public GameObject[] pieces;
     GameObject piece_willPut;
-    public Scr_highlightGrid scr_highlightGrid;
+    public Scr_highlightGridManager scr_highlightGridManager;
     public void Put_initPiece()
     {
         // Hu（歩）: 横一列ずつ配置

@@ -9,7 +9,7 @@ public class Scr_GameManager : MonoBehaviour
     public Scr_PieceFactory pieceFactory;
 
     private Scr_Piece selectedPiece;
-    public Scr_highlightGrid scr_highlightGrid;
+    public Scr_highlightGridManager scr_highlightGridManager;
     public Scr_CaptureManager captureManager;
 
     // variants
@@ -134,7 +134,7 @@ public class Scr_GameManager : MonoBehaviour
 
         // ターンの変更、グリッドの非表示など
         isSpawnTurn = false;
-        scr_highlightGrid.Hide_highlightGrid();
+        scr_highlightGridManager.Hide_highlightGrid();
         Change_turn();
     }
 

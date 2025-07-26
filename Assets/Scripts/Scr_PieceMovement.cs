@@ -3,14 +3,13 @@ using UnityEngine;
 public class Scr_PieceMovement : MonoBehaviour
 {
     public  Scr_GameManager gameManager;
-    public Scr_highlightGrid scr_highlightGrid;
+    public Scr_highlightGridManager scr_highlightGridManager;
 
     public void Show_path_Hu(int x, int y, bool is1P)
     {
         int destX = x;
         int destY = is1P ? y + 1 : y - 1;
         ShowHighlightIfValid(destX, destY, is1P);
-        Debug.Log("showPath");
     }
 
     public void Show_path_Kyosya(int x, int y, bool is1P)
@@ -25,14 +24,14 @@ public class Scr_PieceMovement : MonoBehaviour
             GameObject target = gameManager.Get_GridGameObject(x, destY);
             if (target == null)
             {
-                scr_highlightGrid.Show_highlightGrid(x, destY);
+                scr_highlightGridManager.Show_highlightGrid(x, destY);
             }
             else
             {
                 Scr_Piece piece = target.GetComponent<Scr_Piece>();
                 if (piece != null && piece.Get_is1PPiece() != is1P)
                 {
-                    scr_highlightGrid.Show_highlightGrid(x, destY);
+                    scr_highlightGridManager.Show_highlightGrid(x, destY);
                 }
                 break; // 味方 or 敵 どちらでもここで止まる
             }
@@ -127,14 +126,14 @@ public class Scr_PieceMovement : MonoBehaviour
         GameObject target = gameManager.Get_GridGameObject(x, y);
         if (target == null)
         {
-            scr_highlightGrid.Show_highlightGrid(x, y);
+            scr_highlightGridManager.Show_highlightGrid(x, y);
             return true; // 続ける
         }
 
         Scr_Piece piece = target.GetComponent<Scr_Piece>();
         if (piece != null && piece.Get_is1PPiece() != is1P)
         {
-            scr_highlightGrid.Show_highlightGrid(x, y);
+            scr_highlightGridManager.Show_highlightGrid(x, y);
         }
 
         return false; // どちらにせよここで止まる
@@ -146,14 +145,14 @@ public class Scr_PieceMovement : MonoBehaviour
         GameObject target = gameManager.Get_GridGameObject(x, y);
         if (target == null)
         {
-            scr_highlightGrid.Show_highlightGrid(x, y);
+            scr_highlightGridManager.Show_highlightGrid(x, y);
         }
         else
         {
             Scr_Piece piece = target.GetComponent<Scr_Piece>();
             if (piece != null && piece.Get_is1PPiece() != is1P)
             {
-                scr_highlightGrid.Show_highlightGrid(x, y);
+                scr_highlightGridManager.Show_highlightGrid(x, y);
             }
         }
     }

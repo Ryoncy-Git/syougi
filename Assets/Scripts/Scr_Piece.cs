@@ -9,7 +9,7 @@ public class Scr_Piece : MonoBehaviour
     // bool isSelected = false;
     private Scr_GameManager gameManager;
     private Scr_PieceMovement pieceMovement;
-    private Scr_highlightGrid scr_highlightGrid;
+    private Scr_highlightGridManager scr_highlightGridManager;
     private Scr_CaptureManager captureManager;
     SpriteRenderer sr;
 
@@ -22,21 +22,15 @@ public class Scr_Piece : MonoBehaviour
     {
         gameManager = GameObject.Find("Obj_GameManager").GetComponent<Scr_GameManager>();
         pieceMovement = GameObject.Find("Obj_PieceMovement").GetComponent<Scr_PieceMovement>();
-        scr_highlightGrid = GameObject.Find("Obj_highlightGrid").GetComponent<Scr_highlightGrid>();
+        scr_highlightGridManager = GameObject.Find("Obj_highlightGridManager").GetComponent<Scr_highlightGridManager>();
         captureManager = GameObject.Find("Obj_CaptureManager").GetComponent<Scr_CaptureManager>();
 
-        if (gameManager == null || pieceMovement == null || scr_highlightGrid == null || captureManager == null)
+        if (gameManager == null || pieceMovement == null || scr_highlightGridManager == null || captureManager == null)
             Debug.Log("Null!!!!!");
 
         sr = GetComponent<SpriteRenderer>();
 
         InitPiece();
-    }
-
-    void Update()
-    {
-        if (gameManager == null || pieceMovement == null || scr_highlightGrid == null || captureManager == null)
-            Debug.Log("Null!!!!!");
     }
 
     void InitPiece()
@@ -58,7 +52,7 @@ public class Scr_Piece : MonoBehaviour
     public void Deselect()
     {
         sr.color = Color.white;
-        scr_highlightGrid.Hide_highlightGrid();
+        scr_highlightGridManager.Hide_highlightGrid();
     }
 
     void Show_path()
@@ -142,7 +136,7 @@ public class Scr_Piece : MonoBehaviour
         gameManager.Set_GridGameObject(null, prevX, prevY);
         gameManager.Set_GridGameObject(this.gameObject, x, y);
 
-        scr_highlightGrid.Hide_highlightGrid();
+        scr_highlightGridManager.Hide_highlightGrid();
         gameManager.DeselectPiece();
 
         gameManager.Change_turn();

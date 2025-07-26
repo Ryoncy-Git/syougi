@@ -6,7 +6,7 @@ public class Scr_UI : MonoBehaviour
 {
     public Scr_GameManager gameManager;
     public Scr_PieceFactory pieceFactory;
-    public Scr_highlightGrid scr_highlightGrid;
+    public Scr_highlightGridManager scr_highlightGridManager;
     public Scr_CaptureManager captureManager;
     public GameObject UI_Nari;
     public TMP_Text text_capturedPiece1;
@@ -71,7 +71,7 @@ public class Scr_UI : MonoBehaviour
     public void Show_selectPutPiece()
     {
         Hide_AllUI();
-        scr_highlightGrid.Hide_highlightGrid();
+        scr_highlightGridManager.Hide_highlightGrid();
         UI_selectPutPiece.SetActive(true);
     }
 
@@ -112,7 +112,7 @@ public class Scr_UI : MonoBehaviour
             for (int j = 0; j < 9; j++)
             {
                 if (gameManager.Get_GridGameObject(i, j) == null)
-                    scr_highlightGrid.Show_highlightGrid(i, j);
+                    scr_highlightGridManager.Show_highlightGrid(i, j);
             }
         }
 

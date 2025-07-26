@@ -158,7 +158,7 @@ MonoBehaviour:
   - {fileID: 81243189606713526, guid: 39a35207ea8018642a06f784b83ba8aa, type: 3}
   - {fileID: 81243189606713526, guid: 5c9b49ab25f66b04aa4bdb4995e1d89f, type: 3}
   - {fileID: 81243189606713526, guid: 95353d148b743f6479120125d2319dee, type: 3}
-  scr_highlightGrid: {fileID: 404202030}
+  scr_highlightGridManager: {fileID: 404202030}
 --- !u!4 &13791227
 Transform:
   m_ObjectHideFlags: 0
@@ -591,7 +591,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1835520706}
   pieceFactory: {fileID: 13791226}
-  scr_highlightGrid: {fileID: 404202030}
+  scr_highlightGridManager: {fileID: 404202030}
   captureManager: {fileID: 1970039165}
   UI_Nari: {fileID: 519046927}
   text_capturedPiece1: {fileID: 1880245537}
@@ -1120,7 +1120,7 @@ GameObject:
   - component: {fileID: 404202029}
   - component: {fileID: 404202030}
   m_Layer: 0
-  m_Name: Obj_highlightGrid
+  m_Name: Obj_highlightGridManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1150,7 +1150,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 404202028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d00b9a0048d8021438bf5a3fdb3dd0f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 55075c3428723ab46a7eee99c2436c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab_highlightGrid: {fileID: 1922801079020809212, guid: ff2f891a2ff9ab44d81236ce87e2c483, type: 3}
@@ -3252,7 +3252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1835520706}
-  scr_highlightGrid: {fileID: 404202030}
+  scr_highlightGridManager: {fileID: 404202030}
 --- !u!4 &1403580040
 Transform:
   m_ObjectHideFlags: 0
@@ -3970,7 +3970,7 @@ MonoBehaviour:
   Scr_ui: {fileID: 232826284}
   Koma: {fileID: 112028993}
   pieceFactory: {fileID: 13791226}
-  scr_highlightGrid: {fileID: 404202030}
+  scr_highlightGridManager: {fileID: 404202030}
   captureManager: {fileID: 1970039165}
 --- !u!1 &1853086176
 GameObject:
