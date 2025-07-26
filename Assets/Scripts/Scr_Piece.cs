@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Scr_Piece : MonoBehaviour
 {
@@ -39,6 +40,12 @@ public class Scr_Piece : MonoBehaviour
     }
     public void OnMouseDown()
     {
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            Debug.Log("UIの上なのでスキップ");
+            return; // UIの上なので処理しない
+        }
+        
         if (gameManager.Get_is1PTurn() == is1PPiece)
             gameManager.SelectPiece(this);
     }
@@ -138,8 +145,6 @@ public class Scr_Piece : MonoBehaviour
 
         scr_highlightGridManager.Hide_highlightGrid();
         gameManager.DeselectPiece();
-
-        gameManager.Change_turn();
     }
 
     public void Set_is1PPiece(bool state)

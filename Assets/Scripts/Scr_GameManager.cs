@@ -34,7 +34,6 @@ public class Scr_GameManager : MonoBehaviour
 
     public void SelectPiece(Scr_Piece piece)
     {
-
         if (selectedPiece != null)
         {
             selectedPiece.Deselect();
@@ -72,7 +71,7 @@ public class Scr_GameManager : MonoBehaviour
         return is1PTurn;
     }
 
-    public void Change_turn()
+    void Change_turn()
     {
         is1PTurn = !is1PTurn;
     }
@@ -112,6 +111,8 @@ public class Scr_GameManager : MonoBehaviour
                 selectedPiece.Movement(x, y);
             }
         }
+
+        Change_turn();
     }
 
     void HandleSpawnTurn(int x, int y)

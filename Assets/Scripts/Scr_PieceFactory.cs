@@ -6,6 +6,7 @@ public class Scr_PieceFactory : MonoBehaviour
     public GameObject[] pieces;
     GameObject piece_willPut;
     public Scr_highlightGridManager scr_highlightGridManager;
+    public Scr_GameManager gameManager;
     public void Put_initPiece()
     {
         // Hu（歩）: 横一列ずつ配置
@@ -75,8 +76,13 @@ public class Scr_PieceFactory : MonoBehaviour
         : Quaternion.Euler(0, 0, 180);
 
         if (prefab == null) return;
-        Instantiate(prefab, new Vector3(x, y, -1), rotation, Obj_Koma.transform)
-            .GetComponent<Scr_Piece>().Set_is1PPiece(is1P);
+
+        GameObject obj =
+        Instantiate(prefab, new Vector3(x, y, -1), rotation, Obj_Koma.transform);
+        
+        obj.GetComponent<Scr_Piece>().Set_is1PPiece(is1P);
+
+        gameManager.Set_GridGameObject(obj, x, y);
     }
 
     // 左右対称に2つ配置（左と右）
