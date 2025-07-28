@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Kyosya_0: 2306054331614469221
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

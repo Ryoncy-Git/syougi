@@ -4,14 +4,31 @@ using UnityEngine.EventSystems;
 public class Scr_Piece : MonoBehaviour
 {
     //transform.position - (x, y, -1);
-    [SerializeField] PieceType pieceType;
-    public bool is1PPiece = true;
-    public bool isNari = false;
-    // bool isSelected = false;
+    // managers
     private Scr_GameManager gameManager;
     private Scr_PieceMovement pieceMovement;
     private Scr_highlightGridManager scr_highlightGridManager;
     private Scr_CaptureManager captureManager;
+
+    // variants
+    [SerializeField] PieceType pieceType;
+    public bool is1PPiece = true;
+    public bool isNari = false;
+    // bool isSelected = false;
+
+    // 自分のゲームとして新しく追加予定のもの
+    [System.Flags]
+    public enum EffectFlags
+    {
+        None = 0,
+        Poison = 1 << 0,
+        Freeze = 1 << 1,
+        Burn = 1 << 2,
+        Shield = 1 << 3,
+        Haste = 1 << 4,
+    }
+    EffectFlags currentEffects = EffectFlags.None;
+
     SpriteRenderer sr;
 
     void Start()
@@ -31,12 +48,9 @@ public class Scr_Piece : MonoBehaviour
 
         sr = GetComponent<SpriteRenderer>();
 
-        InitPiece();
-    }
-
-    void InitPiece()
-    {
-        
+        // variants
+        currentEffects = EffectFlags.None;
+        isNari = false;
     }
     public void OnMouseDown()
     {
@@ -45,7 +59,7 @@ public class Scr_Piece : MonoBehaviour
             Debug.Log("UIの上なのでスキップ");
             return; // UIの上なので処理しない
         }
-        
+
         if (gameManager.Get_is1PTurn() == is1PPiece)
             gameManager.SelectPiece(this);
     }
@@ -70,8 +84,8 @@ public class Scr_Piece : MonoBehaviour
         // gamemanagerのほうで範囲外のものははじくようにできているから、
         // show_highlightGrid でこっちでは盤面内かどうかを判定する必要はない
         // ただし、駒があるかどうかは判定しないためそこは見る必要がある
-        bool isKinLike = isNari && 
-        (pieceType == PieceType.Hu || pieceType == PieceType.Kyosya || 
+        bool isKinLike = isNari &&
+        (pieceType == PieceType.Hu || pieceType == PieceType.Kyosya ||
         pieceType == PieceType.Keima || pieceType == PieceType.Gin);
 
         if (isKinLike || pieceType == PieceType.Kin)
@@ -131,7 +145,7 @@ public class Scr_Piece : MonoBehaviour
         int prevX = Mathf.RoundToInt(transform.position.x);
         int prevY = Mathf.RoundToInt(transform.position.y);
 
-        
+
         GameObject targetObject = gameManager.Get_GridGameObject(x, y);
         if (targetObject != null)//cacth
         {
@@ -170,5 +184,16 @@ public class Scr_Piece : MonoBehaviour
     public bool Get_isNari()
     {
         return isNari;
+    }
+    public void AddEffect(EffectFlags effect) {
+        currentEffects |= effect;
+    }
+
+    public void RemoveEffect(EffectFlags effect) {
+        currentEffects &= ~effect;
+    }
+
+    public bool HasEffect(EffectFlags effect) {
+        return (currentEffects & effect) != 0;
     }
 }

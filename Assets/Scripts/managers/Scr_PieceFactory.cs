@@ -7,6 +7,7 @@ public class Scr_PieceFactory : MonoBehaviour
     GameObject piece_willPut;
     public Scr_highlightGridManager scr_highlightGridManager;
     public Scr_GameManager gameManager;
+    private int pieceOffSet = -1;
     public void Put_initPiece()
     {
         // Hu（歩）: 横一列ずつ配置
@@ -78,7 +79,7 @@ public class Scr_PieceFactory : MonoBehaviour
         if (prefab == null) return;
 
         GameObject obj =
-        Instantiate(prefab, new Vector3(x, y, -1), rotation, Obj_Koma.transform);
+        Instantiate(prefab, new Vector3(x, y, pieceOffSet), rotation, Obj_Koma.transform);
         
         obj.GetComponent<Scr_Piece>().Set_is1PPiece(is1P);
 

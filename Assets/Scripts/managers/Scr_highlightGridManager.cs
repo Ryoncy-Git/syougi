@@ -5,6 +5,7 @@ public class Scr_highlightGridManager : MonoBehaviour
     public GameObject prefab_highlightGrid;
     public Scr_GameManager gameManager;
     private GameObject[,] highlightGrid = new GameObject[9, 9];
+    private int highlightGridOffSet = -2;
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class Scr_highlightGridManager : MonoBehaviour
             for (int x = 0; x < 9; x++)
             {
                 GameObject generated =
-                Instantiate(prefab_highlightGrid, new Vector3(x, y, -2),
+                Instantiate(prefab_highlightGrid, new Vector3(x, y, highlightGridOffSet),
                             Quaternion.identity, GameObject.Find("Obj_highlightGridManager").transform);
 
                 highlightGrid[x, y] = generated;

@@ -4,17 +4,24 @@ using System.Collections.Generic;
 
 public class Scr_UI : MonoBehaviour
 {
+    //managers
     public Scr_GameManager gameManager;
     public Scr_PieceFactory pieceFactory;
     public Scr_highlightGridManager scr_highlightGridManager;
     public Scr_CaptureManager captureManager;
-    public GameObject UI_Nari;
+
+    // texts
+    
     public TMP_Text text_capturedPiece1;
     public TMP_Text text_capturedPiece2;
+    public TMP_Text text_winner;
+
+    // objects
     public GameObject UI_selectPutPiece;
     public GameObject UI_default;
     public GameObject UI_Settled;
-    public TMP_Text text_winner;
+    public GameObject UI_Nari;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
