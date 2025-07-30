@@ -74,12 +74,54 @@ public class Scr_UI : MonoBehaviour
 
     void Show_Grid_and_Hide_UI() //手ごまを置くときのやつ
     {
-        for (int i = 0; i < 9; i++)
+        GameObject will = pieceFactory.Get_piece_willPut();
+        if(will == null)
         {
-            for (int j = 0; j < 9; j++)
+            Debug.LogError("No piece selected to put.");
+            return;
+        }
+        if(will.GetComponent<Scr_Piece>() == null)
+        {
+            Debug.LogError("Selected piece does not have Scr_Piece component.");
+            return;
+        }
+
+        if (will.GetComponent<Scr_Piece>().Get_PieceType() == PieceType.Hu) // 2歩チェック
+        {
+            for (int i = 0; i < 9; i++)
             {
-                if (gameManager.Get_GridGameObject(i, j) == null)
-                    scr_highlightGridManager.Show_highlightGrid(i, j);
+                bool isExistHu = false;
+                for (int j = 0; j < 9; j++)
+                {
+                    GameObject Grid = gameManager.Get_GridGameObject(i, j);
+                    if(Grid == null)
+                        continue;
+                    
+                    if (gameManager.Get_GridGameObject(i, j).GetComponent<Scr_Piece>().Get_PieceType() == PieceType.Hu)
+                    {
+                        isExistHu = true;
+                        break;
+                    }
+                }
+
+                if (!isExistHu)
+                {
+                    for (int j = 0; j < 9; j++)
+                    {
+                        scr_highlightGridManager.Show_highlightGrid(i, j);
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    if (gameManager.Get_GridGameObject(i, j) == null)
+                        scr_highlightGridManager.Show_highlightGrid(i, j);
+                }
             }
         }
 
@@ -123,6 +165,7 @@ public class Scr_UI : MonoBehaviour
 
     private void TrySelectCapturedPiece(PieceType type)
     {
+        gameManager.DeselectPiece();
         Dictionary<PieceType, int> dict = gameManager.Get_is1PTurn()
             ? captureManager.Get_CapturedPiece1P()
             : captureManager.Get_CapturedPiece2P();

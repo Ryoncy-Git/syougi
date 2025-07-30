@@ -80,7 +80,7 @@ public class Scr_PieceFactory : MonoBehaviour
 
         GameObject obj =
         Instantiate(prefab, new Vector3(x, y, pieceOffSet), rotation, Obj_Koma.transform);
-        
+
         obj.GetComponent<Scr_Piece>().Set_is1PPiece(is1P);
 
         gameManager.Set_GridGameObject(obj, x, y);

@@ -70,6 +70,7 @@ public class Scr_Piece : MonoBehaviour
     {
         sr.color = Color.gray;
         Show_path();
+        gameManager.Set_isSpawnTurn(false);
     }
 
     public void Deselect()

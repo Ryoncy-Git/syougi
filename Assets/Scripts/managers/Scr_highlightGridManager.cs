@@ -36,7 +36,7 @@ public class Scr_highlightGridManager : MonoBehaviour
             {
                 if (highlightGrid[i, j] == null)
                     continue;
-                
+
                 highlightGrid[i, j].SetActive(false);
             }
         }

@@ -44,6 +44,9 @@ public class Scr_GameManager : MonoBehaviour
 
     public void DeselectPiece()
     {
+        if( selectedPiece == null)
+            return;
+            
         selectedPiece.Deselect();
         selectedPiece = null;
     }
