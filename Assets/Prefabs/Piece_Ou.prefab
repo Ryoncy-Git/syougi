@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5325397111926105348, guid: eaf3d6bb38aa8d649b0f826be0614178, type: 3}
+  m_Sprite: {fileID: 1408006996721689694, guid: 58f060079210bcf4e9738c94b1522522, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -150,3 +150,5 @@ MonoBehaviour:
   pieceType: 5
   is1PPiece: 1
   isNari: 0
+  normalSprite: {fileID: 1408006996721689694, guid: 58f060079210bcf4e9738c94b1522522, type: 3}
+  nariSprite: {fileID: 1408006996721689694, guid: 58f060079210bcf4e9738c94b1522522, type: 3}

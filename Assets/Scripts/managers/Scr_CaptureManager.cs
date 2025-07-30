@@ -42,9 +42,10 @@ public class Scr_CaptureManager : MonoBehaviour
             Destroy(piece);
         }
 
-        Scr_ui.Show_capturedPiece(capturedPieces_1P, capturedPieces_2P);
+        // Scr_ui.Show_capturedPiece(capturedPieces_1P, capturedPieces_2P);
+        Scr_ui.Show_Box();
 
-        Debug.Log($"キャプチャ対象: {targetPieceType}, 自分のターン: {is1P}, 駒の持ち主: {targetPiece.Get_is1PPiece()}");
+        // Debug.Log($"キャプチャ対象: {targetPieceType}, 自分のターン: {is1P}, 駒の持ち主: {targetPiece.Get_is1PPiece()}");
     }
 
     public Dictionary<PieceType, int> Get_CapturedPiece1P()

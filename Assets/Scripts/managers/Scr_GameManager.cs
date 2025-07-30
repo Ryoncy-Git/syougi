@@ -3,7 +3,7 @@ using UnityEngine;
 public class Scr_GameManager : MonoBehaviour
 {
     // instances
-    
+
     public Scr_UI Scr_ui;
     public GameObject Koma;
     public Scr_PieceFactory pieceFactory;
@@ -14,15 +14,15 @@ public class Scr_GameManager : MonoBehaviour
 
     // variants
     private GameObject[,] grid = new GameObject[9, 9];
-    
+
     bool is1PTurn = true;
     int NaruX, NaruY;
     bool isSpawnTurn = false;
     bool isNariUIActive = false;
-    
+
     void Start()
     {
-        Init();   
+        Init();
     }
 
     void Init()
@@ -51,7 +51,7 @@ public class Scr_GameManager : MonoBehaviour
     {
         if (x >= 0 && x < 9 && y >= 0 && y < 9)
         {
-            Debug.Log($"Grid[{x},{y}] = {(grid[x, y] ? grid[x, y].name : "null")}");
+            // Debug.Log($"Grid[{x},{y}] = {(grid[x, y] ? grid[x, y].name : "null")}");
             grid[x, y] = piece;
         }
     }
@@ -74,6 +74,7 @@ public class Scr_GameManager : MonoBehaviour
     void Change_turn()
     {
         is1PTurn = !is1PTurn;
+        Scr_ui.Switching_Box();
     }
 
     public void Click_highlightGrid(int x, int y)
@@ -85,7 +86,7 @@ public class Scr_GameManager : MonoBehaviour
             HandleSpawnTurn(x, y);
         else
             HandleMoveTurn(x, y);
-        
+
     }
 
     void HandleMoveTurn(int x, int y)
@@ -95,7 +96,7 @@ public class Scr_GameManager : MonoBehaviour
         canNari = (selectedPiece.Get_is1PPiece() && y >= 6) || (selectedPiece.Get_is1PPiece() && prevY >= 6) ||
                 (!selectedPiece.Get_is1PPiece() && y <= 2) || (!selectedPiece.Get_is1PPiece() && prevY <= 2);
 
-        if (canNari && !selectedPiece.Get_isNari())
+        if (canNari && !selectedPiece.Get_isNari() && selectedPiece.Get_PieceType() != PieceType.Ou)
         {
             NaruX = x;
             NaruY = y;
@@ -117,7 +118,7 @@ public class Scr_GameManager : MonoBehaviour
 
     void HandleSpawnTurn(int x, int y)
     {
-        
+
         Quaternion rotation = is1PTurn
         ? Quaternion.identity
         : Quaternion.Euler(0, 0, 180);
@@ -169,5 +170,13 @@ public class Scr_GameManager : MonoBehaviour
     public bool Get_isSpawnTurn()
     {
         return isSpawnTurn;
+    }
+
+    public void Click_sonohen()
+    {
+        if(selectedPiece != null)
+        {
+            selectedPiece.Deselect();
+        }
     }
 }

@@ -11,30 +11,23 @@ public class Scr_UI : MonoBehaviour
     public Scr_CaptureManager captureManager;
 
     // texts
-    
-    public TMP_Text text_capturedPiece1;
-    public TMP_Text text_capturedPiece2;
     public TMP_Text text_winner;
 
     // objects
-    public GameObject UI_selectPutPiece;
-    public GameObject UI_default;
     public GameObject UI_Settled;
     public GameObject UI_Nari;
-    
+    public GameObject UI_Box;
+    public GameObject[] Text_Box;
+    public GameObject[] Button;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Hide_AllUI();
 
-        UI_default.SetActive(true);
-
-        Show_capturedPiece
-        (
-            captureManager.Get_CapturedPiece1P(),
-            captureManager.Get_CapturedPiece2P()
-        );
+        Show_Box();
+        Switching_Box();
     }
 
     // Update is called once per frame
@@ -46,8 +39,6 @@ public class Scr_UI : MonoBehaviour
     void Hide_AllUI()
     {
         UI_Nari.SetActive(false);
-        UI_selectPutPiece.SetActive(false);
-        UI_default.SetActive(false);
         UI_Settled.SetActive(false);
     }
 
@@ -72,39 +63,8 @@ public class Scr_UI : MonoBehaviour
     public void Hide_NariSelect()
     {
         UI_Nari.SetActive(false);
-        UI_default.SetActive(true);
     }
 
-    public void Show_selectPutPiece()
-    {
-        Hide_AllUI();
-        scr_highlightGridManager.Hide_highlightGrid();
-        UI_selectPutPiece.SetActive(true);
-    }
-
-    public void Hide_selectPutPiece()
-    {
-        UI_selectPutPiece.SetActive(false);
-        UI_default.SetActive(true);
-    }
-
-
-    public void Show_capturedPiece(Dictionary<PieceType, int> piece1, Dictionary<PieceType, int> piece2)
-    {
-        text_capturedPiece1.text = BuildCapturedPieceText(piece1, "1P");
-        text_capturedPiece2.text = BuildCapturedPieceText(piece2, "2P");
-    }
-    private string BuildCapturedPieceText(Dictionary<PieceType, int> pieces, string playerLabel)
-    {
-        return $"Captured Pieces ({playerLabel})\n" +
-               $"Hu     : {GetCount(pieces, PieceType.Hu)}\n" +
-               $"Kyosya : {GetCount(pieces, PieceType.Kyosya)}\n" +
-               $"Keima  : {GetCount(pieces, PieceType.Keima)}\n" +
-               $"Gin    : {GetCount(pieces, PieceType.Gin)}\n" +
-               $"Kin    : {GetCount(pieces, PieceType.Kin)}\n" +
-               $"Kaku   : {GetCount(pieces, PieceType.Kaku)}\n" +
-               $"Hisya  : {GetCount(pieces, PieceType.Hisya)}";
-    }
     private int GetCount(Dictionary<PieceType, int> dict, PieceType type)
     {
         return dict.ContainsKey(type) ? dict[type] : 0;
@@ -122,8 +82,6 @@ public class Scr_UI : MonoBehaviour
                     scr_highlightGridManager.Show_highlightGrid(i, j);
             }
         }
-
-        Hide_selectPutPiece();
 
         gameManager.Set_isSpawnTurn(true);
     }
@@ -187,5 +145,127 @@ public class Scr_UI : MonoBehaviour
 
         UI_Settled.SetActive(true);
         text_winner.text = $"{playerLabel} win!!";
+    }
+
+    public void Show_Box()
+    {
+        foreach (GameObject box in Text_Box)
+        {
+            TMP_Text text = box.GetComponent<TMP_Text>();
+
+            if (box.name.Contains("Hu") && box.name.Contains("1"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece1P(), PieceType.Hu).ToString();
+            }
+            else if (box.name.Contains("Kyosya") && box.name.Contains("1"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece1P(), PieceType.Kyosya).ToString();
+            }
+            else if (box.name.Contains("Keima") && box.name.Contains("1"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece1P(), PieceType.Keima).ToString();
+            }
+            else if (box.name.Contains("Gin") && box.name.Contains("1"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece1P(), PieceType.Gin).ToString();
+            }
+            else if (box.name.Contains("Kin") && box.name.Contains("1"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece1P(), PieceType.Kin).ToString();
+            }
+            else if (box.name.Contains("Kaku") && box.name.Contains("1"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece1P(), PieceType.Kaku).ToString();
+            }
+            else if (box.name.Contains("Hisya") && box.name.Contains("1"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece1P(), PieceType.Hisya).ToString();
+            }
+            // 2P側も同様に
+            else if (box.name.Contains("Hu") && box.name.Contains("2"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece2P(), PieceType.Hu).ToString();
+            }
+            else if (box.name.Contains("Kyosya") && box.name.Contains("2"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece2P(), PieceType.Kyosya).ToString();
+            }
+            else if (box.name.Contains("Keima") && box.name.Contains("2"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece2P(), PieceType.Keima).ToString();
+            }
+            else if (box.name.Contains("Gin") && box.name.Contains("2"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece2P(), PieceType.Gin).ToString();
+            }
+            else if (box.name.Contains("Kin") && box.name.Contains("2"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece2P(), PieceType.Kin).ToString();
+            }
+            else if (box.name.Contains("Kaku") && box.name.Contains("2"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece2P(), PieceType.Kaku).ToString();
+            }
+            else if (box.name.Contains("Hisya") && box.name.Contains("2"))
+            {
+                text.text = GetCount(captureManager.Get_CapturedPiece2P(), PieceType.Hisya).ToString();
+            }
+        }
+    }
+
+    void Show_Button1()
+    {
+        foreach (GameObject button in Button)
+        {
+            if (button.name == "Button1")
+            {
+                button.SetActive(true);
+            }
+        }
+    }
+
+    void Hide_Button1()
+    {
+        foreach (GameObject button in Button)
+        {
+            if (button.name == "Button1")
+            {
+                button.SetActive(false);
+            }
+        }
+    }
+    void Show_Button2()
+    {
+        foreach (GameObject button in Button)
+        {
+            if (button.name == "Button2")
+            {
+                button.SetActive(true);
+            }
+        }
+    }
+    void Hide_Button2()
+    {
+        foreach (GameObject button in Button)
+        {
+            if (button.name == "Button2")
+            {
+                button.SetActive(false);
+            }
+        }
+    }
+
+    public void Switching_Box()
+    {
+        if (gameManager.Get_is1PTurn())
+        {
+            Hide_Button1();
+            Show_Button2();
+        }
+        else
+        {
+            Hide_Button2();
+            Show_Button1();
+        }
     }
 }

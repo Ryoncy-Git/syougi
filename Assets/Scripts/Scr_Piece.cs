@@ -16,6 +16,10 @@ public class Scr_Piece : MonoBehaviour
     public bool isNari = false;
     // bool isSelected = false;
 
+    // sprites
+    [SerializeField] private Sprite normalSprite;
+    [SerializeField] private Sprite nariSprite;
+
     // 自分のゲームとして新しく追加予定のもの
     [System.Flags]
     public enum EffectFlags
@@ -43,14 +47,12 @@ public class Scr_Piece : MonoBehaviour
         scr_highlightGridManager = GameObject.Find("Obj_highlightGridManager").GetComponent<Scr_highlightGridManager>();
         captureManager = GameObject.Find("Obj_CaptureManager").GetComponent<Scr_CaptureManager>();
 
-        if (gameManager == null || pieceMovement == null || scr_highlightGridManager == null || captureManager == null)
-            Debug.Log("Null!!!!!");
-
         sr = GetComponent<SpriteRenderer>();
 
         // variants
         currentEffects = EffectFlags.None;
         isNari = false;
+        UpdateSprite();
     }
     public void OnMouseDown()
     {
@@ -179,21 +181,30 @@ public class Scr_Piece : MonoBehaviour
     public void Set_Nari(bool state)
     {
         isNari = state;
+        UpdateSprite(); // 追加
     }
 
     public bool Get_isNari()
     {
         return isNari;
     }
-    public void AddEffect(EffectFlags effect) {
+    public void AddEffect(EffectFlags effect)
+    {
         currentEffects |= effect;
     }
 
-    public void RemoveEffect(EffectFlags effect) {
+    public void RemoveEffect(EffectFlags effect)
+    {
         currentEffects &= ~effect;
     }
 
-    public bool HasEffect(EffectFlags effect) {
+    public bool HasEffect(EffectFlags effect)
+    {
         return (currentEffects & effect) != 0;
+    }
+    private void UpdateSprite()
+    {
+        if (sr == null) sr = GetComponent<SpriteRenderer>();
+        sr.sprite = isNari ? nariSprite : normalSprite;
     }
 }

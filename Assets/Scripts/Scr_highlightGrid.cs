@@ -10,14 +10,14 @@ public class Scr_highlightGrid : MonoBehaviour
     }
     public void OnMouseDown()
     {
-        Debug.Log("clicked");
+        // Debug.Log("clicked");
         if (gameManager == null)
             return;
 
         // マウスがUIの上にあるかチェック
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
-            Debug.Log("UIの上なのでスキップ");
+            // Debug.Log("UIの上なのでスキップ");
             return; // UIの上なので処理しない
         }
 
