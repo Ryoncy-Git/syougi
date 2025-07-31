@@ -4,7 +4,7 @@ public class Scr_GameManager : MonoBehaviour
 {
     // instances
 
-    public Scr_UI Scr_ui;
+    public UIManager uiManager;
     public GameObject Koma;
     public Scr_PieceFactory pieceFactory;
 
@@ -77,7 +77,7 @@ public class Scr_GameManager : MonoBehaviour
     void Change_turn()
     {
         is1PTurn = !is1PTurn;
-        Scr_ui.Switching_Box();
+        uiManager.Switching_Box();
     }
 
     public void Click_highlightGrid(int x, int y)
@@ -99,14 +99,19 @@ public class Scr_GameManager : MonoBehaviour
         canNari = (selectedPiece.Get_is1PPiece() && y >= 6) || (selectedPiece.Get_is1PPiece() && prevY >= 6) ||
                 (!selectedPiece.Get_is1PPiece() && y <= 2) || (!selectedPiece.Get_is1PPiece() && prevY <= 2);
 
-        if (canNari && !selectedPiece.Get_isNari() && selectedPiece.Get_PieceType() != PieceType.Ou)
+        if(selectedPiece.Get_PieceType() == PieceType.Ou || selectedPiece.Get_PieceType() == PieceType.Kin) 
+        {
+            canNari = false; // 王と金は成れない
+        }
+
+        if (canNari && !selectedPiece.Get_isNari())
         {
             NaruX = x;
             NaruY = y;
             // 入力をUI以外無効化
             isNariUIActive = true;
             // なる画面のUIを表示
-            Scr_ui.Show_NariSelect();
+            uiManager.Show_NariSelect();
         }
         else
         {
@@ -152,7 +157,6 @@ public class Scr_GameManager : MonoBehaviour
             // UIをくりっくしてから移動をしたいから
             selectedPiece.Movement(NaruX, NaruY);
         }
-        Scr_ui.Hide_NariSelect();
         isNariUIActive = false;
     }
 
@@ -162,7 +166,6 @@ public class Scr_GameManager : MonoBehaviour
         {
             selectedPiece.Movement(NaruX, NaruY);
         }
-        Scr_ui.Hide_NariSelect();
         isNariUIActive = false;
     }
 

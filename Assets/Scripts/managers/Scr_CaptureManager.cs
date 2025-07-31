@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class Scr_CaptureManager : MonoBehaviour
 {
     public Scr_PieceFactory pieceFactory;
-    public Scr_UI Scr_ui;
+    public UIManager uiManager;
     public Scr_GameManager gameManager;
     Dictionary<PieceType, int> capturedPieces_1P = new Dictionary<PieceType, int>();
     Dictionary<PieceType, int> capturedPieces_2P = new Dictionary<PieceType, int>();
@@ -28,7 +28,7 @@ public class Scr_CaptureManager : MonoBehaviour
         PieceType targetPieceType = targetPiece.Get_PieceType();
 
         if (targetPieceType == PieceType.Ou)
-            Scr_ui.Settled(gameManager.Get_is1PTurn());
+            uiManager.Settled(gameManager.Get_is1PTurn());
 
         var dict = is1P ? capturedPieces_1P : capturedPieces_2P;
         if (dict.ContainsKey(targetPieceType))
@@ -42,8 +42,8 @@ public class Scr_CaptureManager : MonoBehaviour
             Destroy(piece);
         }
 
-        // Scr_ui.Show_capturedPiece(capturedPieces_1P, capturedPieces_2P);
-        Scr_ui.Show_Box();
+        // uiManager.Show_capturedPiece(capturedPieces_1P, capturedPieces_2P);
+        uiManager.Show_Box();
 
         // Debug.Log($"キャプチャ対象: {targetPieceType}, 自分のターン: {is1P}, 駒の持ち主: {targetPiece.Get_is1PPiece()}");
     }

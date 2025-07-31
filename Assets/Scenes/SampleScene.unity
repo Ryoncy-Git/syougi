@@ -258,8 +258,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826286}
+        m_TargetAssemblyTypeName: UINariManager, Assembly-CSharp
         m_MethodName: Button_Naranai
         m_Mode: 1
         m_Arguments:
@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 94406442}
   - component: {fileID: 94406441}
   m_Layer: 0
-  m_Name: Button1
+  m_Name: ButtonGin1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -390,8 +390,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Gin
         m_Mode: 1
         m_Arguments:
@@ -665,7 +665,7 @@ GameObject:
   - component: {fileID: 137862634}
   - component: {fileID: 137862633}
   m_Layer: 0
-  m_Name: Button2
+  m_Name: ButtonKaku2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -734,8 +734,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Kaku
         m_Mode: 1
         m_Arguments:
@@ -1022,6 +1022,9 @@ GameObject:
   - component: {fileID: 232826281}
   - component: {fileID: 232826280}
   - component: {fileID: 232826284}
+  - component: {fileID: 232826285}
+  - component: {fileID: 232826286}
+  - component: {fileID: 232826287}
   m_Layer: 5
   m_Name: UserInterface
   m_TagString: Untagged
@@ -1130,9 +1133,26 @@ MonoBehaviour:
   pieceFactory: {fileID: 13791226}
   scr_highlightGridManager: {fileID: 404202030}
   captureManager: {fileID: 1970039165}
-  text_winner: {fileID: 354512105}
-  UI_Settled: {fileID: 1788332204}
-  UI_Nari: {fileID: 519046927}
+  uiNariManager: {fileID: 232826286}
+  uiBoxManager: {fileID: 232826285}
+  uiSettleManager: {fileID: 232826287}
+--- !u!114 &232826285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232826279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17093847b2bbd6c4b9704e0fd2aef96a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1835520706}
+  pieceFactory: {fileID: 13791226}
+  highlightGridManager: {fileID: 404202030}
+  uiManager: {fileID: 232826284}
+  captureManager: {fileID: 1970039165}
   UI_Box: {fileID: 864174245}
   Text_Box:
   - {fileID: 346614073}
@@ -1164,6 +1184,34 @@ MonoBehaviour:
   - {fileID: 336295486}
   - {fileID: 369840614}
   - {fileID: 137862631}
+--- !u!114 &232826286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232826279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aba254affa09cdf4c865c8bb30d9f5aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1835520706}
+  UI_Nari: {fileID: 519046927}
+--- !u!114 &232826287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232826279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ea2598902785949a434749db5321e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text_winner: {fileID: 354512105}
+  UI_Settled: {fileID: 1788332204}
 --- !u!1 &270091805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,7 +1633,7 @@ GameObject:
   - component: {fileID: 336295489}
   - component: {fileID: 336295488}
   m_Layer: 0
-  m_Name: Button2
+  m_Name: ButtonKin2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1654,8 +1702,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Kin
         m_Mode: 1
         m_Arguments:
@@ -1989,7 +2037,7 @@ GameObject:
   - component: {fileID: 369840617}
   - component: {fileID: 369840616}
   m_Layer: 0
-  m_Name: Button2
+  m_Name: ButtonHisya2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2058,8 +2106,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Hisya
         m_Mode: 1
         m_Arguments:
@@ -2210,7 +2258,7 @@ GameObject:
   - component: {fileID: 387151263}
   - component: {fileID: 387151262}
   m_Layer: 0
-  m_Name: Button1
+  m_Name: ButtonHu1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2279,8 +2327,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Hu
         m_Mode: 1
         m_Arguments:
@@ -2374,6 +2422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab_highlightGrid: {fileID: 1922801079020809212, guid: ff2f891a2ff9ab44d81236ce87e2c483, type: 3}
+  pieceFactory: {fileID: 13791226}
   gameManager: {fileID: 1835520706}
 --- !u!1 &420438786
 GameObject:
@@ -2699,7 +2748,7 @@ GameObject:
   - component: {fileID: 537560234}
   - component: {fileID: 537560233}
   m_Layer: 0
-  m_Name: Button1
+  m_Name: ButtonKin1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2768,8 +2817,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Kin
         m_Mode: 1
         m_Arguments:
@@ -3051,7 +3100,7 @@ GameObject:
   - component: {fileID: 808509902}
   - component: {fileID: 808509901}
   m_Layer: 0
-  m_Name: Button2
+  m_Name: ButtonGin2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3120,8 +3169,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Gin
         m_Mode: 1
         m_Arguments:
@@ -3253,8 +3302,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826286}
+        m_TargetAssemblyTypeName: UINariManager, Assembly-CSharp
         m_MethodName: Button_Naru
         m_Mode: 1
         m_Arguments:
@@ -3573,7 +3622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.21960784}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.68235296}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3925,7 +3974,7 @@ GameObject:
   - component: {fileID: 1006886343}
   - component: {fileID: 1006886342}
   m_Layer: 0
-  m_Name: Button2
+  m_Name: ButtonKeima2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3994,8 +4043,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Keima
         m_Mode: 1
         m_Arguments:
@@ -4057,7 +4106,7 @@ GameObject:
   - component: {fileID: 1061035381}
   - component: {fileID: 1061035380}
   m_Layer: 0
-  m_Name: Button2
+  m_Name: ButtonHu2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4126,8 +4175,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Hu
         m_Mode: 1
         m_Arguments:
@@ -4367,7 +4416,7 @@ GameObject:
   - component: {fileID: 1202933422}
   - component: {fileID: 1202933421}
   m_Layer: 0
-  m_Name: Button1
+  m_Name: ButtonKaku1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4436,8 +4485,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Kaku
         m_Mode: 1
         m_Arguments:
@@ -4714,7 +4763,7 @@ GameObject:
   - component: {fileID: 1451079356}
   - component: {fileID: 1451079355}
   m_Layer: 0
-  m_Name: Button1
+  m_Name: ButtonHisya2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4783,8 +4832,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Hisya
         m_Mode: 1
         m_Arguments:
@@ -4935,7 +4984,7 @@ GameObject:
   - component: {fileID: 1480279857}
   - component: {fileID: 1480279856}
   m_Layer: 0
-  m_Name: Button1
+  m_Name: ButtonKeima1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5004,8 +5053,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Keima
         m_Mode: 1
         m_Arguments:
@@ -5477,7 +5526,7 @@ GameObject:
   - component: {fileID: 1665723121}
   - component: {fileID: 1665723120}
   m_Layer: 0
-  m_Name: Button1
+  m_Name: ButtonKyosya1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5546,8 +5595,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Kyosya
         m_Mode: 1
         m_Arguments:
@@ -6117,7 +6166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee353e84e12e7c4582f010695583738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Scr_ui: {fileID: 232826284}
+  uiManager: {fileID: 232826284}
   Koma: {fileID: 112028993}
   pieceFactory: {fileID: 13791226}
   scr_highlightGridManager: {fileID: 404202030}
@@ -6135,7 +6184,7 @@ GameObject:
   - component: {fileID: 1883979718}
   - component: {fileID: 1883979717}
   m_Layer: 0
-  m_Name: Button2
+  m_Name: ButtonKyosya2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6204,8 +6253,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232826284}
-        m_TargetAssemblyTypeName: Scr_UI, Assembly-CSharp
+      - m_Target: {fileID: 232826285}
+        m_TargetAssemblyTypeName: UIBoxManager, Assembly-CSharp
         m_MethodName: Click_Kyosya
         m_Mode: 1
         m_Arguments:
@@ -6373,7 +6422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pieceFactory: {fileID: 13791226}
-  Scr_ui: {fileID: 232826284}
+  uiManager: {fileID: 232826284}
   gameManager: {fileID: 1835520706}
 --- !u!4 &1970039166
 Transform:
