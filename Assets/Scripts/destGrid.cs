@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Scr_highlightGrid : MonoBehaviour
+public class DestGrid : MonoBehaviour
 {
-    public Scr_GameManager gameManager;
+    public GameManager gameManager;
     void Start()
     {
-        gameManager = GameObject.Find("Obj_GameManager").GetComponent<Scr_GameManager>();// インスペクターから直接指定ができないのでこれ
+        gameManager = GameObject.Find("Obj_GameManager").GetComponent<GameManager>();// インスペクターから直接指定ができないのでこれ
     }
     public void OnMouseDown()
     {
@@ -23,7 +23,7 @@ public class Scr_highlightGrid : MonoBehaviour
 
         int roundX = Mathf.RoundToInt(transform.position.x);
         int roundY = Mathf.RoundToInt(transform.position.y);
-        gameManager.Click_highlightGrid(roundX, roundY);
+        gameManager.Click_destGrid(roundX, roundY);
         // Debug.Log("行先を選択");
     }
 }

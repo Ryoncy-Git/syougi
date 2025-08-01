@@ -4,11 +4,11 @@ using TMPro;
 
 public class UIBoxManager : MonoBehaviour
 {
-    public Scr_GameManager gameManager;
-    public Scr_PieceFactory pieceFactory;
-    public Scr_highlightGridManager highlightGridManager;
+    public GameManager gameManager;
+    public PieceFactory pieceFactory;
+    public DestGridManager destGridManager;
     public UIManager uiManager;
-    public Scr_CaptureManager captureManager;
+    public CaptureManager captureManager;
 
     public GameObject UI_Box;
     public GameObject[] Text_Box;
@@ -89,7 +89,7 @@ public class UIBoxManager : MonoBehaviour
     {
         foreach (GameObject button in Button)
         {
-            if (button.name.Contains("Button1"))
+            if (button.name.EndsWith("1"))
             {
                 button.SetActive(true);
             }
@@ -100,7 +100,7 @@ public class UIBoxManager : MonoBehaviour
     {
         foreach (GameObject button in Button)
         {
-            if (button.name.Contains("Button1"))
+            if (button.name.EndsWith("1"))
             {
                 button.SetActive(false);
             }
@@ -110,7 +110,7 @@ public class UIBoxManager : MonoBehaviour
     {
         foreach (GameObject button in Button)
         {
-            if (button.name.Contains("Button2"))
+            if (button.name.EndsWith("2"))
             {
                 button.SetActive(true);
             }
@@ -120,7 +120,7 @@ public class UIBoxManager : MonoBehaviour
     {
         foreach (GameObject button in Button)
         {
-            if (button.name.Contains("Button2"))
+            if (button.name.EndsWith("2"))
             {
                 button.SetActive(false);
             }
@@ -197,7 +197,7 @@ public class UIBoxManager : MonoBehaviour
 
     void Show_Grid_and_Hide_UI() //手ごまを置くときのやつ
     {
-        highlightGridManager.ShowGridIfNotNihu();
+        destGridManager.ShowGridIfNotNihu();
         uiManager.Hide_AllUI();
     }
 }

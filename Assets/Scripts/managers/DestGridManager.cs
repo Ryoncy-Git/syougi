@@ -1,53 +1,53 @@
 using UnityEngine;
 
-public class Scr_highlightGridManager : MonoBehaviour
+public class DestGridManager : MonoBehaviour
 {
-    public GameObject prefab_highlightGrid;
-    public Scr_PieceFactory pieceFactory;
-    public Scr_GameManager gameManager;
-    private GameObject[,] highlightGrid = new GameObject[9, 9];
-    private int highlightGridOffSet = -2;
+    public GameObject prefab_destGrid;
+    public PieceFactory pieceFactory;
+    public GameManager gameManager;
+    private GameObject[,] destGrid = new GameObject[9, 9];
+    private int destGridOffSet = -3;
 
     void Start()
     {
-        init_highlightGrid();
+        init_destGrid();
     }
-    public void init_highlightGrid()
+    public void init_destGrid()
     {
-        // initialize of highlightGrid
+        // initialize of destGrid
         for (int y = 0; y < 9; y++)
         {
             for (int x = 0; x < 9; x++)
             {
                 GameObject generated =
-                Instantiate(prefab_highlightGrid, new Vector3(x, y, highlightGridOffSet),
-                            Quaternion.identity, GameObject.Find("Obj_highlightGridManager").transform);
+                Instantiate(prefab_destGrid, new Vector3(x, y, destGridOffSet),
+                            Quaternion.identity, GameObject.Find("Obj_destGridManager").transform);
 
-                highlightGrid[x, y] = generated;
+                destGrid[x, y] = generated;
                 generated.SetActive(false);
             }
         }
     }
 
-    public void Hide_highlightGrid()
+    public void Hide_destGrid()
     {
         for (int i = 0; i < 9; i++)
         {
             for (int j = 0; j < 9; j++)
             {
-                if (highlightGrid[i, j] == null)
+                if (destGrid[i, j] == null)
                     continue;
 
-                highlightGrid[i, j].SetActive(false);
+                destGrid[i, j].SetActive(false);
             }
         }
     }
 
-    public void Show_highlightGrid(int roundX, int roundY)
+    public void Show_destGrid(int roundX, int roundY)
     {
-        if (roundX >= 0 && roundX < 9 && roundY >= 0 && roundY < 9 && highlightGrid[roundX, roundY] != null)
+        if (roundX >= 0 && roundX < 9 && roundY >= 0 && roundY < 9 && destGrid[roundX, roundY] != null)
         {
-            highlightGrid[roundX, roundY].SetActive(true);
+            destGrid[roundX, roundY].SetActive(true);
         }
     }
 
@@ -59,13 +59,13 @@ public class Scr_highlightGridManager : MonoBehaviour
             Debug.LogError("No piece selected to put.");
             return;
         }
-        if (will.GetComponent<Scr_Piece>() == null)
+        if (will.GetComponent<Piece>() == null)
         {
-            Debug.LogError("Selected piece does not have Scr_Piece component.");
+            Debug.LogError("Selected piece does not have Piece component.");
             return;
         }
 
-        if (will.GetComponent<Scr_Piece>().Get_PieceType() == PieceType.Hu) // 2歩チェック
+        if (will.GetComponent<Piece>().Get_PieceType() == PieceType.Hu) // 2歩チェック
         {
             for (int i = 0; i < 9; i++)
             {
@@ -76,7 +76,8 @@ public class Scr_highlightGridManager : MonoBehaviour
                     if (Grid == null)
                         continue;
 
-                    if (gameManager.Get_GridGameObject(i, j).GetComponent<Scr_Piece>().Get_PieceType() == PieceType.Hu)
+                    Piece targetPiece = gameManager.Get_GridGameObject(i, j).GetComponent<Piece>();
+                    if (targetPiece.Get_PieceType() == PieceType.Hu && (gameManager.Get_is1PTurn() == targetPiece.Get_is1PPiece()) && !targetPiece.Get_isNari())
                     {
                         isExistHu = true;
                         break;
@@ -87,7 +88,8 @@ public class Scr_highlightGridManager : MonoBehaviour
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        Show_highlightGrid(i, j);
+                        if(gameManager.Get_GridGameObject(i, j) == null)
+                            Show_destGrid(i, j);
                     }
                 }
             }
@@ -99,7 +101,7 @@ public class Scr_highlightGridManager : MonoBehaviour
                 for (int j = 0; j < 9; j++)
                 {
                     if (gameManager.Get_GridGameObject(i, j) == null)
-                        Show_highlightGrid(i, j);
+                        Show_destGrid(i, j);
                 }
             }
         }

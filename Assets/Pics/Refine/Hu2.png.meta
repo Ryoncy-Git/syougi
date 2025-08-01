@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7f253e35556447644bdc2a1a001da9b1
+guid: ebc0da39e7af85446bf677e89a8c120f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7028724734618313335
-    second: Keima_0
+      213: 4845480731961485845
+    second: Hu2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Keima_0
+      name: Hu2_0
       rect:
         serializedVersion: 2
         x: 68
-        y: 79
-        width: 383
-        height: 335
+        y: 80
+        width: 356
+        height: 321
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 98dd219f714f47e90800000000000000
-      internalID: -7028724734618313335
+      spriteID: 51a6092ad0b9e3340800000000000000
+      internalID: 4845480731961485845
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Keima_0: -7028724734618313335
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

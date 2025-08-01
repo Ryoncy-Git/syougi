@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class Sonohen : MonoBehaviour
 {
-    public Scr_GameManager gameManager;
+    public GameManager gameManager;
     public void OnMouseDown()
     {
         // Debug.Log("clicked sonohen");

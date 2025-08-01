@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class Scr_GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     // instances
 
     public UIManager uiManager;
     public GameObject Koma;
-    public Scr_PieceFactory pieceFactory;
+    public PieceFactory pieceFactory;
 
-    private Scr_Piece selectedPiece;
-    public Scr_highlightGridManager scr_highlightGridManager;
-    public Scr_CaptureManager captureManager;
+    private Piece selectedPiece;
+    public DestGridManager destGridManager;
+    public CaptureManager captureManager;
 
     // variants
     private GameObject[,] grid = new GameObject[9, 9];
@@ -32,7 +32,7 @@ public class Scr_GameManager : MonoBehaviour
         pieceFactory.Put_initPiece();
     }
 
-    public void SelectPiece(Scr_Piece piece)
+    public void SelectPiece(Piece piece)
     {
         if (selectedPiece != null)
         {
@@ -80,7 +80,7 @@ public class Scr_GameManager : MonoBehaviour
         uiManager.Switching_Box();
     }
 
-    public void Click_highlightGrid(int x, int y)
+    public void Click_destGrid(int x, int y)
     {
         if (isNariUIActive)
             return;
@@ -126,16 +126,10 @@ public class Scr_GameManager : MonoBehaviour
 
     void HandleSpawnTurn(int x, int y)
     {
-
-        Quaternion rotation = is1PTurn
-        ? Quaternion.identity
-        : Quaternion.Euler(0, 0, 180);
-
-
         // 対応する持ち駒を一つ減らす
         GameObject piece_willPut = pieceFactory.Get_piece_willPut();
         PieceType pieceType =
-        piece_willPut.GetComponent<Scr_Piece>().Get_PieceType();
+        piece_willPut.GetComponent<Piece>().Get_PieceType();
 
 
         // 駒の生成
@@ -144,7 +138,7 @@ public class Scr_GameManager : MonoBehaviour
 
         // ターンの変更、グリッドの非表示など
         isSpawnTurn = false;
-        scr_highlightGridManager.Hide_highlightGrid();
+        destGridManager.Hide_destGrid();
         Change_turn();
     }
 
@@ -153,7 +147,7 @@ public class Scr_GameManager : MonoBehaviour
         selectedPiece.Set_Nari(true);
         if (selectedPiece != null)
         {
-            // movementをclick highlightGridに描かないのは
+            // movementをclick destGridに描かないのは
             // UIをくりっくしてから移動をしたいから
             selectedPiece.Movement(NaruX, NaruY);
         }

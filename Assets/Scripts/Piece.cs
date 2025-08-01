@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Scr_Piece : MonoBehaviour
+public class Piece : MonoBehaviour
 {
     //transform.position - (x, y, -1);
     // managers
-    private Scr_GameManager gameManager;
-    private Scr_PieceMovement pieceMovement;
-    private Scr_highlightGridManager scr_highlightGridManager;
-    private Scr_CaptureManager captureManager;
+    private GameManager gameManager;
+    private PieceMovement pieceMovement;
+    private DestGridManager destGridManager;
+    private CaptureManager captureManager;
 
     // variants
     [SerializeField] PieceType pieceType;
@@ -42,10 +42,10 @@ public class Scr_Piece : MonoBehaviour
 
     void Init()
     {
-        gameManager = GameObject.Find("Obj_GameManager").GetComponent<Scr_GameManager>();
-        pieceMovement = GameObject.Find("Obj_PieceMovement").GetComponent<Scr_PieceMovement>();
-        scr_highlightGridManager = GameObject.Find("Obj_highlightGridManager").GetComponent<Scr_highlightGridManager>();
-        captureManager = GameObject.Find("Obj_CaptureManager").GetComponent<Scr_CaptureManager>();
+        gameManager = GameObject.Find("Obj_GameManager").GetComponent<GameManager>();
+        pieceMovement = GameObject.Find("Obj_PieceMovement").GetComponent<PieceMovement>();
+        destGridManager = GameObject.Find("Obj_destGridManager").GetComponent<DestGridManager>();
+        captureManager = GameObject.Find("Obj_CaptureManager").GetComponent<CaptureManager>();
 
         sr = GetComponent<SpriteRenderer>();
 
@@ -69,6 +69,7 @@ public class Scr_Piece : MonoBehaviour
     public void Select()
     {
         sr.color = Color.gray;
+        destGridManager.Hide_destGrid();
         Show_path();
         gameManager.Set_isSpawnTurn(false);
     }
@@ -76,7 +77,7 @@ public class Scr_Piece : MonoBehaviour
     public void Deselect()
     {
         sr.color = Color.white;
-        scr_highlightGridManager.Hide_highlightGrid();
+        destGridManager.Hide_destGrid();
     }
 
     void Show_path()
@@ -85,7 +86,7 @@ public class Scr_Piece : MonoBehaviour
         int roundY = Mathf.RoundToInt(transform.position.y);
 
         // gamemanagerのほうで範囲外のものははじくようにできているから、
-        // show_highlightGrid でこっちでは盤面内かどうかを判定する必要はない
+        // show_destGrid でこっちでは盤面内かどうかを判定する必要はない
         // ただし、駒があるかどうかは判定しないためそこは見る必要がある
         bool isKinLike = isNari &&
         (pieceType == PieceType.Hu || pieceType == PieceType.Kyosya ||
@@ -160,7 +161,7 @@ public class Scr_Piece : MonoBehaviour
         gameManager.Set_GridGameObject(null, prevX, prevY);
         gameManager.Set_GridGameObject(this.gameObject, x, y);
 
-        scr_highlightGridManager.Hide_highlightGrid();
+        destGridManager.Hide_destGrid();
         gameManager.DeselectPiece();
     }
 

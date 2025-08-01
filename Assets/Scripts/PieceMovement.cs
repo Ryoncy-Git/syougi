@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Scr_PieceMovement : MonoBehaviour
+public class PieceMovement : MonoBehaviour
 {
-    public  Scr_GameManager gameManager;
-    public Scr_highlightGridManager scr_highlightGridManager;
+    public  GameManager gameManager;
+    public DestGridManager destGridManager;
 
     public void Show_path_Hu(int x, int y, bool is1P)
     {
@@ -24,14 +24,14 @@ public class Scr_PieceMovement : MonoBehaviour
             GameObject target = gameManager.Get_GridGameObject(x, destY);
             if (target == null)
             {
-                scr_highlightGridManager.Show_highlightGrid(x, destY);
+                destGridManager.Show_destGrid(x, destY);
             }
             else
             {
-                Scr_Piece piece = target.GetComponent<Scr_Piece>();
+                Piece piece = target.GetComponent<Piece>();
                 if (piece != null && piece.Get_is1PPiece() != is1P)
                 {
-                    scr_highlightGridManager.Show_highlightGrid(x, destY);
+                    destGridManager.Show_destGrid(x, destY);
                 }
                 break; // 味方 or 敵 どちらでもここで止まる
             }
@@ -126,14 +126,14 @@ public class Scr_PieceMovement : MonoBehaviour
         GameObject target = gameManager.Get_GridGameObject(x, y);
         if (target == null)
         {
-            scr_highlightGridManager.Show_highlightGrid(x, y);
+            destGridManager.Show_destGrid(x, y);
             return true; // 続ける
         }
 
-        Scr_Piece piece = target.GetComponent<Scr_Piece>();
+        Piece piece = target.GetComponent<Piece>();
         if (piece != null && piece.Get_is1PPiece() != is1P)
         {
-            scr_highlightGridManager.Show_highlightGrid(x, y);
+            destGridManager.Show_destGrid(x, y);
         }
 
         return false; // どちらにせよここで止まる
@@ -145,14 +145,14 @@ public class Scr_PieceMovement : MonoBehaviour
         GameObject target = gameManager.Get_GridGameObject(x, y);
         if (target == null)
         {
-            scr_highlightGridManager.Show_highlightGrid(x, y);
+            destGridManager.Show_destGrid(x, y);
         }
         else
         {
-            Scr_Piece piece = target.GetComponent<Scr_Piece>();
+            Piece piece = target.GetComponent<Piece>();
             if (piece != null && piece.Get_is1PPiece() != is1P)
             {
-                scr_highlightGridManager.Show_highlightGrid(x, y);
+                destGridManager.Show_destGrid(x, y);
             }
         }
     }

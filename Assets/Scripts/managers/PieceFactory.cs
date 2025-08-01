@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class Scr_PieceFactory : MonoBehaviour
+public class PieceFactory : MonoBehaviour
 {
     public GameObject Obj_Koma;
     public GameObject[] pieces;
     GameObject piece_willPut;
-    public Scr_highlightGridManager scr_highlightGridManager;
-    public Scr_GameManager gameManager;
+    public DestGridManager destGridManager;
+    public GameManager gameManager;
     private int pieceOffSet = -1;
     public void Put_initPiece()
     {
@@ -59,7 +59,7 @@ public class Scr_PieceFactory : MonoBehaviour
     {
         foreach (GameObject p in pieces)
         {
-            Scr_Piece scrPiece = p.GetComponent<Scr_Piece>();
+            Piece scrPiece = p.GetComponent<Piece>();
             if (scrPiece != null && scrPiece.Get_PieceType() == type)
             {
                 return p;
@@ -81,7 +81,7 @@ public class Scr_PieceFactory : MonoBehaviour
         GameObject obj =
         Instantiate(prefab, new Vector3(x, y, pieceOffSet), rotation, Obj_Koma.transform);
 
-        obj.GetComponent<Scr_Piece>().Set_is1PPiece(is1P);
+        obj.GetComponent<Piece>().Set_is1PPiece(is1P);
 
         gameManager.Set_GridGameObject(obj, x, y);
     }
@@ -97,7 +97,7 @@ public class Scr_PieceFactory : MonoBehaviour
     {
         foreach (GameObject p in pieces)
         {
-            Scr_Piece scrPiece = p.GetComponent<Scr_Piece>();
+            Piece scrPiece = p.GetComponent<Piece>();
             if (scrPiece != null && scrPiece.Get_PieceType() == pieceType)
             {
                 piece_willPut = p;
@@ -113,8 +113,12 @@ public class Scr_PieceFactory : MonoBehaviour
         : Quaternion.Euler(0, 0, 180);
 
         if (piece_willPut == null) return;
-        Instantiate(piece_willPut, new Vector3(x, y, -1), rotation, Obj_Koma.transform)
-            .GetComponent<Scr_Piece>().Set_is1PPiece(is1P);
+        
+        GameObject obj =
+            Instantiate(piece_willPut, new Vector3(x, y, -1), rotation, Obj_Koma.transform);
+
+        obj.GetComponent<Piece>().Set_is1PPiece(is1P);
+        gameManager.Set_GridGameObject(obj, x, y);
     }
 
     public GameObject Get_piece_willPut()

@@ -151,4 +151,4 @@ MonoBehaviour:
   is1PPiece: 1
   isNari: 0
   normalSprite: {fileID: -4001006791416984512, guid: 203d5b44338ccb14e933f8485c19e920, type: 3}
-  nariSprite: {fileID: 0}
+  nariSprite: {fileID: 8948316464334842198, guid: 191ffe4037356e94dba5414a5548fcbf, type: 3}

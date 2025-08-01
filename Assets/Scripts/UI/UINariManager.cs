@@ -3,7 +3,7 @@ using UnityEngine;
 public class UINariManager : MonoBehaviour
 {
     // managers
-    public Scr_GameManager gameManager;
+    public GameManager gameManager;
     public GameObject UI_Nari;
     public void Button_Naru()
     {

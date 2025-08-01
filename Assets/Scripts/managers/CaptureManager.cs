@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Scr_CaptureManager : MonoBehaviour
+public class CaptureManager : MonoBehaviour
 {
-    public Scr_PieceFactory pieceFactory;
+    public PieceFactory pieceFactory;
     public UIManager uiManager;
-    public Scr_GameManager gameManager;
+    public GameManager gameManager;
     Dictionary<PieceType, int> capturedPieces_1P = new Dictionary<PieceType, int>();
     Dictionary<PieceType, int> capturedPieces_2P = new Dictionary<PieceType, int>();
 
@@ -22,7 +22,7 @@ public class Scr_CaptureManager : MonoBehaviour
     {
         // piece は捕まえられたピース
         // is1Pは捕まえる側がどっちなのかを表す
-        Scr_Piece targetPiece = piece.GetComponent<Scr_Piece>();
+        Piece targetPiece = piece.GetComponent<Piece>();
         if (targetPiece == null) return;
 
         PieceType targetPieceType = targetPiece.Get_PieceType();

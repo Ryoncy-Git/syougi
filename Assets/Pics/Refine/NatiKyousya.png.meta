@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c2c74a3767b6f1f43acb46e701a38d22
+guid: 191ffe4037356e94dba5414a5548fcbf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3563555337581634450
-    second: Gin_0
+      213: 8948316464334842198
+    second: NatiKyousya_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gin_0
+      name: NatiKyousya_0
       rect:
         serializedVersion: 2
         x: 68
-        y: 79
-        width: 383
-        height: 335
+        y: 80
+        width: 356
+        height: 321
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e6cdffd0d45bb8ec0800000000000000
-      internalID: -3563555337581634450
+      spriteID: 65925720a6ece2c70800000000000000
+      internalID: 8948316464334842198
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Gin_0: -3563555337581634450
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public class UIManager : MonoBehaviour
 {
     //managers
-    public Scr_GameManager gameManager;
-    public Scr_PieceFactory pieceFactory;
-    public Scr_highlightGridManager scr_highlightGridManager;
-    public Scr_CaptureManager captureManager;
+    public GameManager gameManager;
+    public PieceFactory pieceFactory;
+    public DestGridManager destGridManager;
+    public CaptureManager captureManager;
     public UINariManager uiNariManager;
     public UIBoxManager uiBoxManager;
     public UISettleManager uiSettleManager;
