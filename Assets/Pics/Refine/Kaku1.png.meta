@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Kaku1_0: 2826101451695116558
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

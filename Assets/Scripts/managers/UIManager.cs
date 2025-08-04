@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public UINariManager uiNariManager;
     public UIBoxManager uiBoxManager;
     public UISettleManager uiSettleManager;
+    public UILevelUPManager uiLevelUPManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -53,5 +54,10 @@ public class UIManager : MonoBehaviour
     public void Show_Box()
     {
         uiBoxManager.Show_BoxUI();
+    }
+
+    public void ShowLevelUPDisplay(Piece piece)
+    {
+        uiLevelUPManager.ShowLevelUPDisplay(piece);
     }
 }

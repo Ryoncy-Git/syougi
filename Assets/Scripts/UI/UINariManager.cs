@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections; 
 
 public class UINariManager : MonoBehaviour
 {
@@ -19,6 +20,13 @@ public class UINariManager : MonoBehaviour
 
     public void Show_NariUI()
     {
+        StartCoroutine(ShowNariUICoroutine());
+        // UI_Nari.SetActive(true);
+    }
+
+    private IEnumerator ShowNariUICoroutine()
+    {
+        yield return new WaitForSeconds(0.2f);
         UI_Nari.SetActive(true);
     }
 

@@ -27,9 +27,13 @@ public class CaptureManager : MonoBehaviour
 
         PieceType targetPieceType = targetPiece.Get_PieceType();
 
+
+        // 王が攻撃対象の場合はゲーム終了
         if (targetPieceType == PieceType.Ou)
             uiManager.Settled(gameManager.Get_is1PTurn());
 
+
+        // 捕まえた駒のタイプをカウント
         var dict = is1P ? capturedPieces_1P : capturedPieces_2P;
         if (dict.ContainsKey(targetPieceType))
             dict[targetPieceType]++;
@@ -37,15 +41,14 @@ public class CaptureManager : MonoBehaviour
             dict[targetPieceType] = 1;
 
 
+        // 駒を除去
         if (piece != null)
         {
             Destroy(piece);
         }
 
-        // uiManager.Show_capturedPiece(capturedPieces_1P, capturedPieces_2P);
+        // 持ち駒数の更新
         uiManager.Show_Box();
-
-        // Debug.Log($"キャプチャ対象: {targetPieceType}, 自分のターン: {is1P}, 駒の持ち主: {targetPiece.Get_is1PPiece()}");
     }
 
     public Dictionary<PieceType, int> Get_CapturedPiece1P()

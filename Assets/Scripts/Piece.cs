@@ -9,31 +9,25 @@ public class Piece : MonoBehaviour
     private PieceMovement pieceMovement;
     private DestGridManager destGridManager;
     private CaptureManager captureManager;
+    private UIManager uiManager;
 
     // variants
     [SerializeField] PieceType pieceType;
     public bool is1PPiece = true;
     public bool isNari = false;
     // bool isSelected = false;
+    SpriteRenderer sr;
 
     // sprites
     [SerializeField] private Sprite normalSprite;
     [SerializeField] private Sprite nariSprite;
 
     // 自分のゲームとして新しく追加予定のもの
-    [System.Flags]
-    public enum EffectFlags
-    {
-        None = 0,
-        Poison = 1 << 0,
-        Freeze = 1 << 1,
-        Burn = 1 << 2,
-        Shield = 1 << 3,
-        Haste = 1 << 4,
-    }
-    EffectFlags currentEffects = EffectFlags.None;
-
-    SpriteRenderer sr;
+    private int exp = 0;
+    private int pieceLevel = 0;
+    private AttackSkillType attackSkills = AttackSkillType.None;
+    private DefendSkillType defendSkills = DefendSkillType.None;
+    private ControlSkillType controlSkills = ControlSkillType.None;
 
     void Start()
     {
@@ -46,11 +40,11 @@ public class Piece : MonoBehaviour
         pieceMovement = GameObject.Find("Obj_PieceMovement").GetComponent<PieceMovement>();
         destGridManager = GameObject.Find("Obj_destGridManager").GetComponent<DestGridManager>();
         captureManager = GameObject.Find("Obj_CaptureManager").GetComponent<CaptureManager>();
+        uiManager = GameObject.Find("UserInterface").GetComponent<UIManager>();
 
         sr = GetComponent<SpriteRenderer>();
 
         // variants
-        currentEffects = EffectFlags.None;
         isNari = false;
         UpdateSprite();
     }
@@ -165,6 +159,12 @@ public class Piece : MonoBehaviour
         gameManager.DeselectPiece();
     }
 
+    private void UpdateSprite()
+    {
+        if (sr == null) sr = GetComponent<SpriteRenderer>();
+        sr.sprite = isNari ? nariSprite : normalSprite;
+    }
+
     public void Set_is1PPiece(bool state)
     {
         is1PPiece = state;
@@ -190,23 +190,77 @@ public class Piece : MonoBehaviour
     {
         return isNari;
     }
-    public void AddEffect(EffectFlags effect)
+
+    public AttackSkillType GetAttackSkill()
     {
-        currentEffects |= effect;
+        return attackSkills;
+    }
+    public DefendSkillType GetDefendSkill()
+    {
+        return defendSkills;
+    }
+    public ControlSkillType GetControlSkill()
+    {
+        return controlSkills;
+    }
+    public void AddAttackSkill(AttackSkillType skill)
+    {
+        attackSkills |= skill;
+    }
+    public void AddDefendSkill(DefendSkillType skill)
+    {
+        defendSkills |= skill;
+    }
+    public void AddControlSkill(ControlSkillType skill)
+    {
+        controlSkills |= skill;
     }
 
-    public void RemoveEffect(EffectFlags effect)
+    public void RemoveAllSkills()
     {
-        currentEffects &= ~effect;
+        attackSkills = AttackSkillType.None;
+        defendSkills = DefendSkillType.None;
+        controlSkills = ControlSkillType.None;
+    }
+    
+
+    public void AddExp(int value)
+    {
+        exp += value;
+
+        bool flag = true;
+        while (flag)
+        {
+            if (pieceLevel <= 0 && exp >= 2)
+            {
+                LevelUp();
+            }
+            else if (pieceLevel <= 1 && exp >= 5)
+            {
+                LevelUp();
+            }
+            else if (pieceLevel <= 2 && exp >= 10)
+            {
+                LevelUp();
+            }
+
+            if (pieceLevel == 0 && exp < 2 && exp >= 0 ||
+               pieceLevel == 1 && exp < 5 && exp >= 2 ||
+               pieceLevel == 2 && exp < 10 && exp >= 5)
+            {
+                flag = false;
+            }
+        }
     }
 
-    public bool HasEffect(EffectFlags effect)
+    private void LevelUp()
     {
-        return (currentEffects & effect) != 0;
-    }
-    private void UpdateSprite()
-    {
-        if (sr == null) sr = GetComponent<SpriteRenderer>();
-        sr.sprite = isNari ? nariSprite : normalSprite;
+        if (pieceLevel >= 3) return; // 最大レベルは3と仮定
+
+        pieceLevel++;
+        // レベルアップ時の処理をここに追加
+        // 例えば、スキルの追加や強化など
+        uiManager.ShowLevelUPDisplay(this);
+        // Debug.Log($"Piece leveled up to level {pieceLevel} with {exp} experience points.");
     }
 }
