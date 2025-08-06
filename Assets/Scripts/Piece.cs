@@ -10,6 +10,7 @@ public class Piece : MonoBehaviour
     private DestGridManager destGridManager;
     private CaptureManager captureManager;
     private UIManager uiManager;
+    private SkillManager skillManager;
 
     // variants
     [SerializeField] PieceType pieceType;
@@ -41,6 +42,7 @@ public class Piece : MonoBehaviour
         destGridManager = GameObject.Find("Obj_destGridManager").GetComponent<DestGridManager>();
         captureManager = GameObject.Find("Obj_CaptureManager").GetComponent<CaptureManager>();
         uiManager = GameObject.Find("UserInterface").GetComponent<UIManager>();
+        skillManager = GameObject.Find("Skills").GetComponent<SkillManager>();
 
         sr = GetComponent<SpriteRenderer>();
 
@@ -65,6 +67,7 @@ public class Piece : MonoBehaviour
         sr.color = Color.gray;
         destGridManager.Hide_destGrid();
         Show_path();
+        skillManager.ShowSkills(this);
         gameManager.Set_isSpawnTurn(false);
     }
 
@@ -145,16 +148,37 @@ public class Piece : MonoBehaviour
 
 
         GameObject targetObject = gameManager.Get_GridGameObject(x, y);
+
+        // スキルの処理をここに追加
+        // もし移動先の駒がディフェンススキルを持ってるなら
+        if (targetObject != null && targetObject.GetComponent<Piece>().GetDefendSkill() != DefendSkillType.None)
+        {
+            // ディフェンススキルの処理を行う
+
+        }
+        targetObject = gameManager.Get_GridGameObject(x, y); // ディフェンススキルで移動するかもしれないので一応更新
+
+        if (targetObject != null && this.GetAttackSkill() != AttackSkillType.None && targetObject != null)
+        {
+            // 攻撃スキルの処理を行う
+
+        }
+
+
         if (targetObject != null)//cacth
         {
             // 持ち駒 = gameManager.Get_GridGameObject(x, y);
             captureManager.Capture_piece(targetObject, is1PPiece);
         }
 
+
+
+        // 移動
         transform.position = new Vector3(x, y, -1);
         gameManager.Set_GridGameObject(null, prevX, prevY);
         gameManager.Set_GridGameObject(this.gameObject, x, y);
 
+        // その他の処理
         destGridManager.Hide_destGrid();
         gameManager.DeselectPiece();
     }
@@ -222,7 +246,7 @@ public class Piece : MonoBehaviour
         defendSkills = DefendSkillType.None;
         controlSkills = ControlSkillType.None;
     }
-    
+
 
     public void AddExp(int value)
     {
@@ -262,5 +286,15 @@ public class Piece : MonoBehaviour
         // 例えば、スキルの追加や強化など
         uiManager.ShowLevelUPDisplay(this);
         // Debug.Log($"Piece leveled up to level {pieceLevel} with {exp} experience points.");
+    }
+
+    public int GetExp()
+    {
+        return exp;
+    }
+
+    public int GetLevel()
+    {
+        return pieceLevel;
     }
 }

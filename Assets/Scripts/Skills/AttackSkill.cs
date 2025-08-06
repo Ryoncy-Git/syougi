@@ -12,15 +12,17 @@ public enum AttackSkillType
 }
 public class AttackSkill : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public bool HasSkill(int skillIndex, AttackSkillType skill)
     {
-
+        return ((int)skill & (1 << skillIndex)) != 0;
     }
-
-    // Update is called once per frame
-    void Update()
+    public string GetTextOfSkill(int skillIndex)
     {
-
+        switch (skillIndex)
+        {
+            case 0: return "二回行動";
+            case 1: return "スカウト";
+            default: return "不明なスキル";
+        }
     }
 }

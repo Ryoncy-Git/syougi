@@ -41,11 +41,16 @@ public class CaptureManager : MonoBehaviour
             dict[targetPieceType] = 1;
 
 
+        //経験値を加算
+        gameManager.AddExp(piece);
+
         // 駒を除去
         if (piece != null)
         {
             Destroy(piece);
         }
+
+        
 
         // 持ち駒数の更新
         uiManager.Show_Box();

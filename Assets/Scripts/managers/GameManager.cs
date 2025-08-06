@@ -44,9 +44,9 @@ public class GameManager : MonoBehaviour
 
     public void DeselectPiece()
     {
-        if( selectedPiece == null)
+        if (selectedPiece == null)
             return;
-            
+
         selectedPiece.Deselect();
         selectedPiece = null;
     }
@@ -94,16 +94,19 @@ public class GameManager : MonoBehaviour
 
     void HandleMoveTurn(int x, int y)
     {
+        // なる可能性があるかチェック
         bool canNari = false;
         int prevY = Mathf.RoundToInt(selectedPiece.transform.position.y);
         canNari = (selectedPiece.Get_is1PPiece() && y >= 6) || (selectedPiece.Get_is1PPiece() && prevY >= 6) ||
                 (!selectedPiece.Get_is1PPiece() && y <= 2) || (!selectedPiece.Get_is1PPiece() && prevY <= 2);
 
-        if(selectedPiece.Get_PieceType() == PieceType.Ou || selectedPiece.Get_PieceType() == PieceType.Kin) 
+        if (selectedPiece.Get_PieceType() == PieceType.Ou || selectedPiece.Get_PieceType() == PieceType.Kin)
         {
             canNari = false; // 王と金は成れない
         }
 
+
+        // なる場合にUIを表示
         if (canNari && !selectedPiece.Get_isNari())
         {
             NaruX = x;
@@ -113,7 +116,7 @@ public class GameManager : MonoBehaviour
             // なる画面のUIを表示
             uiManager.Show_NariSelect();
         }
-        else
+        else // ならない場合
         {
             if (selectedPiece != null)
             {
@@ -147,8 +150,6 @@ public class GameManager : MonoBehaviour
         selectedPiece.Set_Nari(true);
         if (selectedPiece != null)
         {
-            // movementをclick destGridに描かないのは
-            // UIをくりっくしてから移動をしたいから
             selectedPiece.Movement(NaruX, NaruY);
         }
         isNariUIActive = false;
@@ -174,9 +175,32 @@ public class GameManager : MonoBehaviour
 
     public void Click_sonohen()
     {
-        if(selectedPiece != null)
+        if (selectedPiece != null)
         {
-            selectedPiece.Deselect();
+            DeselectPiece();
+        }
+    }
+
+    public void AddExp(GameObject targetObject)
+    {
+        Piece targetPiece = targetObject.GetComponent<Piece>();
+        if( targetPiece == null) return;
+
+        selectedPiece.AddExp(1);
+
+        if (targetPiece.GetExp() >= 2)
+        {
+            selectedPiece.AddExp(1);
+        }
+
+        if (targetPiece.GetExp() >= 5)
+        {
+            selectedPiece.AddExp(1);
+        }
+
+        if (targetPiece.GetExp() >= 10)
+        {
+            selectedPiece.AddExp(1);
         }
     }
 }
