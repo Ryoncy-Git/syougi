@@ -20,9 +20,9 @@ public class AttackSkill : MonoBehaviour
     {
         switch (skillIndex)
         {
-            case 0: return "二回行動";
-            case 1: return "スカウト";
-            default: return "不明なスキル";
+            case 0: return "Twice";
+            case 1: return "Scout";
+            default: return "unknown_attack";
         }
     }
 }

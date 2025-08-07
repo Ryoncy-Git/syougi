@@ -22,10 +22,10 @@ public class ControlSkill : MonoBehaviour
     {
         switch (skillIndex)
         {
-            case 0: return "強制移動";
-            case 1: return "選択不可";
-            case 2: return "スキル3の説明";
-            default: return "不明なスキル";
+            case 0: return "force";
+            case 1: return "deselectable";
+            case 2: return "weeklen";
+            default: return "unknown_control";
         }
     }
 }

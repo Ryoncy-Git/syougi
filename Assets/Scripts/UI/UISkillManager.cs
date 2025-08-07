@@ -22,17 +22,29 @@ public class UISkillManager : MonoBehaviour
         {
             for (int j = 0; j < 3; j++)
             {
-                Debug.Log(counter + "= counter");
+                // Debug.Log(counter + "= counter");
                 switch (i)
                 {
                     case 0:
-                        texts[counter].text = attackSkill.GetTextOfSkill(j);
+                        if (attackSkill.HasSkill(j, targetSkillAttack))
+                        {
+                            texts[counter].text = attackSkill.GetTextOfSkill(j);
+                            counter++;
+                        }
                         break;
                     case 1:
-                        texts[counter].text = defendSkill.GetTextOfSkill(j);
+                        if (defendSkill.HasSkill(j, targetSkillDefend))
+                        {
+                            texts[counter].text = defendSkill.GetTextOfSkill(j);
+                            counter++;
+                        }
                         break;
                     case 2:
-                        texts[counter].text = controlSkill.GetTextOfSkill(j);
+                        if (controlSkill.HasSkill(j, targetSkillControl))
+                        {
+                            texts[counter].text = controlSkill.GetTextOfSkill(j);
+                            counter++;
+                        }
                         break;
                     default:
                         break;

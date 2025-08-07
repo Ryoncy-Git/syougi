@@ -22,10 +22,10 @@ public class DefendSkill : MonoBehaviour
     {
         switch (skillIndex)
         {
-            case 0: return "回避";
-            case 1: return "入れ替え";
-            case 2: return "無敵";
-            default: return "不明なスキル";
+            case 0: return "dodge";
+            case 1: return "swap";
+            case 2: return "invincible";
+            default: return "unkown_defend";
         }
     }
 
